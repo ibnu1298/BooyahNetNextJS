@@ -25,10 +25,7 @@ async function Registrasi(name: string, email: string, password: string) {
 }
 
 export async function POST(request: NextRequest) {
-  const page = request.nextUrl.searchParams.get("page");
-  const headersInstance = headers();
   const req = await request.json();
-  const Sort = "Date";
   const res = await Registrasi(req.name, req.email, req.password);
   const result = await res.json();
   try {

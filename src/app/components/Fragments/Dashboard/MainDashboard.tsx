@@ -1,8 +1,6 @@
 "use client";
 
 import GreetingCard from "./GreetingCard";
-import SalesChart from "./SalesChart";
-import StatCards from "./StatCards";
 import ProfileView from "./ProfileView";
 import { useDashboard } from "@/app/context/DashboardContext";
 import TabelUserPayment from "../Table/TableUserPayment";
@@ -10,9 +8,7 @@ import { useEffect, useState } from "react";
 import { getUsers } from "@/utils/Fetch/getUsers";
 import { signOut, useSession } from "next-auth/react";
 import { ListUser } from "@/types/UserDetail";
-import { ToyBrick } from "lucide-react";
 import TabelPembayaran from "../Table/TablePembayaran";
-import CreatePayment from "./CreatePayment";
 import { decodedToken } from "@/app/interface/decodedToken";
 import { jwtDecode } from "jwt-decode";
 // import SettingsView from './SettingsView'; (nanti)
@@ -29,8 +25,8 @@ export default function MainDashboard() {
   const [data, setData] = useState<ListUser[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
 
+  const token = session?.user?.token;
   useEffect(() => {
-    const token = session?.user?.token;
     if (!token) return;
 
     try {

@@ -8,7 +8,6 @@ import NotificationModal from "../Modal/NotificationModal";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export default function LoginWhatsAppForm() {
-  const searchParams = useSearchParams();
   const [showGetOTP, setShowGetOTP] = useState(true);
   const [waNumber, setWaNumber] = useState("");
   const [cooldown, setCooldown] = useState(30);
@@ -35,7 +34,7 @@ export default function LoginWhatsAppForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const res = await signIn("wa-login", {
-      wa_number,
+      wa_number: wa_number,
       otp,
       redirect: false,
     });

@@ -2,14 +2,12 @@
 
 import Image from "next/image";
 import { Pencil } from "lucide-react";
-import { address } from "framer-motion/client";
 
 export default function ProfileView() {
-  let photoUrl = null;
   const user = {
     name: "Budi Santoso",
     email: "budi@example.com",
-    photoUrl: photoUrl || "/man-avatar.svg",
+    photoUrl: "/man-avatar.svg",
     role: "Admin",
     phone: 828762364543,
     address: "dimana ini yaa",

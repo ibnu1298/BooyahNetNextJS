@@ -1,6 +1,3 @@
-// utils/fetchWithAuth.ts
-import { signOut } from "next-auth/react";
-
 export async function fetchWithAuth(
   input: RequestInfo,
   sessionToken: string,

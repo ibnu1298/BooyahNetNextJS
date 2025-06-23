@@ -8,7 +8,6 @@ import { updateIsPaid } from "@/utils/Fetch/updateIsPaid";
 import { useSession } from "next-auth/react";
 import { useEffect, useState, useRef } from "react";
 import CreatePayment from "../Dashboard/CreatePayment";
-import { getUsers } from "@/utils/Fetch/getUsers";
 import { updatePaidAt } from "@/utils/Fetch/updatePaidAt";
 import { SquarePen } from "lucide-react";
 type Props = { token: string; user_id: string; onUpdated?: () => void };
@@ -17,7 +16,6 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
   console.log("session:" + session?.user?.token);
 
   const [data, setData] = useState<Payment[]>([]);
-  const [listUser, setListUser] = useState<ListUser[]>([]);
   const [user, setUser] = useState<UserDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const modalRef = useRef<HTMLDivElement>(null);
