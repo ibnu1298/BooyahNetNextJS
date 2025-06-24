@@ -5,7 +5,7 @@ import Input from "../../Elements/Input";
 import Button from "../../Elements/Button";
 import { getSession, signIn } from "next-auth/react";
 import NotificationModal from "../Modal/NotificationModal";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function LoginWhatsAppForm() {
   const [showGetOTP, setShowGetOTP] = useState(true);
@@ -20,7 +20,7 @@ export default function LoginWhatsAppForm() {
     message: "",
     type: "success" as "success" | "error",
   });
-  let wa_number = `${prefix}${waNumber}`;
+  const wa_number = `${prefix}${waNumber}`;
 
   useEffect(() => {
     if (cooldown > 0) {
@@ -34,7 +34,7 @@ export default function LoginWhatsAppForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const res = await signIn("wa-login", {
-      wa_number: wa_number,
+      wa_number,
       otp,
       redirect: false,
     });

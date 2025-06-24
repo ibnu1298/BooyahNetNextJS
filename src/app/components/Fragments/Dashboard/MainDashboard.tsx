@@ -15,15 +15,14 @@ import { jwtDecode } from "jwt-decode";
 
 export default function MainDashboard() {
   const dashboard = useDashboard();
-
+  const { data: session } = useSession();
+  const [data, setData] = useState<ListUser[]>([]);
+  const [userId, setUserId] = useState<string | null>(null);
   if (!dashboard) {
     return null; // atau tampilkan loading, error, dll
   }
 
   const { currentView } = dashboard;
-  const { data: session } = useSession();
-  const [data, setData] = useState<ListUser[]>([]);
-  const [userId, setUserId] = useState<string | null>(null);
 
   const token = session?.user?.token;
   useEffect(() => {

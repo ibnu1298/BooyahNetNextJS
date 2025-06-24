@@ -4,7 +4,6 @@ import type { Session, User } from "next-auth";
 import { jwtDecode } from "jwt-decode";
 import { decodedToken } from "@/app/interface/decodedToken";
 import { JWT } from "next-auth/jwt";
-import { DatabaseIcon } from "lucide-react";
 async function refreshAccessToken(refreshToken: string) {
   try {
     const res = await fetch(

@@ -1,10 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { UserDetail } from "@/types/UserDetail";
-import { capitalizeName, formatTanggal } from "@/utils/commonFunctions";
-import { fetchWithAuth } from "@/utils/fetchWithAuth";
+import { capitalizeName } from "@/utils/commonFunctions";
 import { getUserDetail } from "@/utils/Fetch/getUserDetail";
 
 export default function GreetingCard() {

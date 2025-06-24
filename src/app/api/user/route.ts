@@ -1,4 +1,3 @@
-import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 const url = `${process.env.NEXT_PUBLIC_BASE_URL_API}/api/users/`;

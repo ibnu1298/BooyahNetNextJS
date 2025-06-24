@@ -22,7 +22,7 @@ export default function RegisterForm() {
     message: "",
     type: "success" as "success" | "error",
   });
-  let wa_number = `${prefix}${waNumber}`;
+  const wa_number = `${prefix}${waNumber}`;
   const router = useRouter();
   useEffect(() => {
     if (cooldown > 0) {
@@ -173,7 +173,7 @@ export default function RegisterForm() {
     } catch (error) {
       setNotif({
         show: true,
-        message: "Terjadi kesalahan server.",
+        message: "Terjadi kesalahan server. " + error,
         type: "error",
       });
     }
