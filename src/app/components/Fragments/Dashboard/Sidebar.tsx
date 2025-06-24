@@ -12,11 +12,15 @@ const menu: { icon: React.ReactNode; label: string; view: DashboardView }[] = [
 ];
 
 export default function Sidebar() {
-  const { currentView, setView } = useDashboard();
+  const dashboard = useDashboard();
   const handleLogout = () => {
     signOut({ callbackUrl: "/login" });
   };
+  if (!dashboard) {
+    return null; // atau tampilkan loading, error, dll
+  }
 
+  const { currentView, setView } = dashboard;
   return (
     <>
       {/* Desktop Sidebar */}
