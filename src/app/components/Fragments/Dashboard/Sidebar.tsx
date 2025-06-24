@@ -9,9 +9,9 @@ import {
   LayoutDashboard,
   ShieldUser,
 } from "lucide-react";
-import { getSession, signOut, useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const menu: {
   icon: React.ReactNode;
@@ -34,21 +34,6 @@ const menu: {
 export default function Sidebar() {
   const dashboard = useDashboard();
   const { data: session } = useSession();
-  const [role, setRole] = useState("User");
-
-  useEffect(() => {
-    async function fetchData() {
-      const sessionNow = await getSession(); // ⬅️ ini akan memicu refresh jika `updateAge` sudah lewat
-      const userId = sessionNow?.user?.user_id;
-      const token = sessionNow?.user?.token;
-      const role = sessionNow?.user?.role;
-
-      if (!userId || !token) return;
-    }
-
-    fetchData();
-    setRole(role);
-  }, [session]);
   const handleLogout = () => {
     signOut({ callbackUrl: "/login" });
   };
@@ -63,7 +48,7 @@ export default function Sidebar() {
       <aside className="hidden md:flex w-20 bg-gray-800 flex-col items-center py-6 space-y-6">
         <nav className="flex flex-col items-center gap-6 mt-10">
           {menu.map((item, i) => {
-            if (item.view === "admin" && role !== "Admin") {
+            if (item.view === "admin" && session?.user?.role !== "Admin") {
               return null; // Sembunyikan tombol admin untuk non-admin
             }
 
@@ -94,26 +79,20 @@ export default function Sidebar() {
 
       {/* Mobile Bottom Navigation */}
       <nav className="fixed bottom-0 left-0 right-0 z-50 bg-gray-800 border-t border-gray-700 flex justify-around items-center py-2 md:hidden">
-        {menu.map((item, i) => {
-          if (item.view === "admin" && role !== "Admin") {
-            return null; // Sembunyikan tombol admin untuk non-admin
-          }
-
-          return (
-            <a
-              key={i}
-              onClick={() => setView(item.view)}
-              className={`flex flex-col items-center text-xs transition ${
-                currentView === item.view
-                  ? "text-purple-400"
-                  : "text-gray-400 hover:text-white"
-              }`}
-            >
-              {item.icon}
-              <span>{item.label}</span>
-            </a>
-          );
-        })}
+        {menu.map((item, i) => (
+          <button
+            key={i}
+            onClick={() => setView(item.view)}
+            className={`flex flex-col items-center text-xs transition ${
+              currentView === item.view
+                ? "text-purple-400"
+                : "text-gray-400 hover:text-white"
+            }`}
+          >
+            {item.icon}
+            <span>{item.label}</span>
+          </button>
+        ))}
         <button
           onClick={handleLogout}
           className="flex flex-col items-center text-xs text-gray-400 hover:text-red-400"
