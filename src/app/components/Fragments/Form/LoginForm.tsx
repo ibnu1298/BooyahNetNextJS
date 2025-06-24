@@ -50,39 +50,41 @@ export default function LoginForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <Input
-        //label="Email"
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-      />
-      <Input
-        //label="Password"
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        required
-      />
-      <div className="flex items-center justify-between text-sm text-white">
-        <label className="flex items-center gap-2">
-          <input type="checkbox" className="accent-purple-500" />
-          Remember me
-        </label>
-        <a href="#" className="hover:underline">
-          Forgot password?
-        </a>
-      </div>
-      <Button type="submit">Login</Button>
+    <>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <Input
+          //label="Email"
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <Input
+          //label="Password"
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <div className="flex items-center justify-between text-sm text-white">
+          <label className="flex items-center gap-2">
+            <input type="checkbox" className="accent-purple-500" />
+            Remember me
+          </label>
+          <a href="#" className="hover:underline">
+            Forgot password?
+          </a>
+        </div>
+        <Button type="submit">Login</Button>
+      </form>
       <NotificationModal
         message={notif.message}
         type={notif.type}
         show={notif.show}
         onClose={() => setNotif((prev) => ({ ...prev, show: false }))}
       />
-    </form>
+    </>
   );
 }

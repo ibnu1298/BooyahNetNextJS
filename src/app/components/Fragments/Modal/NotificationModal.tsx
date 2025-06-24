@@ -27,11 +27,11 @@ export default function NotificationModal({
     <AnimatePresence>
       {show && (
         <motion.div
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 100, opacity: 0 }}
+          initial={{ y: -100, opacity: 0 }} // Awal dari atas
+          animate={{ y: 0, opacity: 1 }} // Turun ke posisi
+          exit={{ y: -100, opacity: 0 }} // Naik keluar
           transition={{ duration: 0.4 }}
-          className={`fixed bottom-1 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-lg shadow-md text-white z-50 whitespace-nowrap overflow-hidden text-ellipsis max-w-[90vw] ${
+          className={`fixed -top-52 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-lg shadow-md text-white z-50 whitespace-nowrap overflow-hidden text-ellipsis max-w-[90vw] ${
             type === "success" ? "bg-cyan-500" : "bg-red-900"
           }`}
         >

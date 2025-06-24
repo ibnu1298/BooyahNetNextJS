@@ -178,6 +178,7 @@ export default function RegisterForm() {
       });
     }
   };
+  console.log("verifyWANumber : " + verifyWANumber);
 
   return (
     <form onSubmit={handleRegister} className="space-y-4">
@@ -255,13 +256,13 @@ export default function RegisterForm() {
                 }}
               />
               <Button type="button" onClick={verifyUnregisteredWA}>
-                Verifikasi
+                Verifikasi OTP
               </Button>
             </>
           )}
         </>
       )}
-      <Button type="submit" disabled={!verifyWANumber}>
+      <Button type="submit" hidden={!verifyWANumber}>
         Submit
       </Button>
       <NotificationModal

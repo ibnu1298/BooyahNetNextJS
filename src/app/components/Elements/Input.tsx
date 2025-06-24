@@ -70,7 +70,7 @@ export default function Input({
             {...props}
             type={isPassword && showPassword ? "text" : type}
             onChange={handleChange}
-            className="flex-1 py-3 pl-4 bg-transparent text-white placeholder-gray-300 placeholder-opacity-70 focus:placeholder-transparent focus:outline-none"
+            className="flex-1 h-12 pl-4 bg-transparent text-white placeholder-gray-300 placeholder-opacity-70 focus:placeholder-transparent focus:outline-none"
             inputMode={isPhoneNumber ? "numeric" : undefined}
             pattern={isPhoneNumber ? "[0-9]*" : undefined}
           />
@@ -82,8 +82,8 @@ export default function Input({
               disabled={rightButton.disabled}
               className={`text-sm ${
                 rightButton.disabled
-                  ? "bg-white/5 text-white/40 text-sm py-3.5 outline-none appearance-none w-80 hover:text-white cursor-not-allowed"
-                  : "bg-white/20 text-white text-sm py-3.5 outline-none appearance-none w-28 hover:bg-white/40"
+                  ? "bg-white/5 text-white/40 text-sm py-3.5 outline-none appearance-none w-fit hover:text-white cursor-not-allowed"
+                  : "bg-white/20 text-white text-sm py-3.5 outline-none appearance-none w-fit hover:bg-white/40"
               }`}
             >
               {rightButton.label}
