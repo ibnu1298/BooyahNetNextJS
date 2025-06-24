@@ -8,11 +8,6 @@ import { UserDetail } from "@/types/UserDetail";
 import { useSession } from "next-auth/react";
 
 export default function ProfileForm() {
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
   const { data: session } = useSession();
   const [loading, setLoading] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
@@ -81,7 +76,7 @@ export default function ProfileForm() {
         type="password"
         name="password"
         placeholder="Masukkan password"
-        value={form.password ?? ""}
+        value={""}
         onChange={handleChange}
       />
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { ListUser, UserDetail } from "@/types/UserDetail";
+import { UserDetail } from "@/types/UserDetail";
 import { formatTanggal, nextBillingDate } from "@/utils/commonFunctions";
 import { getPaymentByUserId } from "@/utils/Fetch/getPaymentByUserId";
 import { getUserDetail } from "@/utils/Fetch/getUserDetail";
@@ -49,7 +49,7 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
     }
   };
 
-  const handleToggle = async (item: any) => {
+  const handleToggle = async (item: Payment) => {
     const newStatus = item.status !== true;
 
     const res = await updateIsPaid(
@@ -81,7 +81,7 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
       setData(result);
       setLoading(false);
     });
-    getUserDetail(userId, token || "").then((result: any) => {
+    getUserDetail(userId, token || "").then((result: UserDetail) => {
       setUser(result);
       setLoading(false);
     });

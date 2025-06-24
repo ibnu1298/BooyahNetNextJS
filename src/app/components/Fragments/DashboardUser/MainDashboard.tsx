@@ -10,13 +10,13 @@ import { useSession } from "next-auth/react";
 
 export default function MainDashboard() {
   const dashboard = useDashboard();
+  const { data: session } = useSession();
 
   if (!dashboard) {
     return null; // atau tampilkan loading, error, dll
   }
 
   const { currentView } = dashboard;
-  const { data: session } = useSession();
   return (
     <section className="max-w-3xl mx-auto flex-1 p-6 overflow-y-auto space-y-6">
       {currentView === "dashboard" && (

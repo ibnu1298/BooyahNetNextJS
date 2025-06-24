@@ -18,3 +18,8 @@ export type ListUser = {
   paid_payments: string;
   total_payments: string;
 };
+export interface GetUserResponse {
+  success: boolean;
+  message: string;
+  data: UserDetail;
+}

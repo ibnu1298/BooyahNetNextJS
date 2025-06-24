@@ -9,10 +9,8 @@ import NotificationModal from "../Modal/NotificationModal";
 import { Session } from "node:inspector/promises";
 
 export default function LoginForm() {
-  const { data: session } = useSession();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const router = useRouter();
   const [notif, setNotif] = useState({
     show: false,
@@ -22,7 +20,6 @@ export default function LoginForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
 
     const res = await signIn("credentials", {
       redirect: false,

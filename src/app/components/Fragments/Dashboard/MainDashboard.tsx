@@ -18,11 +18,6 @@ export default function MainDashboard() {
   const { data: session } = useSession();
   const [data, setData] = useState<ListUser[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
-  if (!dashboard) {
-    return null; // atau tampilkan loading, error, dll
-  }
-
-  const { currentView } = dashboard;
 
   const token = session?.user?.token;
   useEffect(() => {
@@ -45,6 +40,11 @@ export default function MainDashboard() {
       setData(result);
     });
   }, [session, userId]);
+  if (!dashboard) {
+    return null; // atau tampilkan loading, error, dll
+  }
+
+  const { currentView } = dashboard;
   return (
     <section className="flex-1 p-6 overflow-y-auto space-y-6">
       {currentView === "dashboard" && (
