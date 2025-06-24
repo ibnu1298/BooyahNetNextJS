@@ -52,7 +52,7 @@ export default function Input({
             <select
               value={prefix}
               onChange={(e) => onPrefixChange?.(e.target.value)}
-              className="bg-white/20 text-white px-3 py-3.5"
+              className="bg-white/20 text-white px-3 h-12"
             >
               {phonePrefixOptions.map((opt) => (
                 <option
@@ -82,8 +82,8 @@ export default function Input({
               disabled={rightButton.disabled}
               className={`text-sm ${
                 rightButton.disabled
-                  ? "bg-white/5 text-white/40 text-sm py-3.5 outline-none appearance-none w-fit hover:text-white cursor-not-allowed"
-                  : "bg-white/20 text-white text-sm py-3.5 outline-none appearance-none w-fit hover:bg-white/40"
+                  ? "bg-white/5 text-white/40 text-sm h-12 px-4 outline-none appearance-none w-fit hover:text-white cursor-not-allowed"
+                  : "bg-white/20 text-white text-sm h-12 px-4 outline-none appearance-none w-fit hover:bg-white/40"
               }`}
             >
               {rightButton.label}
