@@ -13,7 +13,6 @@ import { SquarePen } from "lucide-react";
 type Props = { token: string; user_id: string; onUpdated?: () => void };
 export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
   const { data: session } = useSession();
-  console.log("session:" + session?.user?.token);
 
   const [data, setData] = useState<Payment[]>([]);
   const [user, setUser] = useState<UserDetail | null>(null);
