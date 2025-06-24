@@ -122,7 +122,7 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
       <div className="max-h-[300px] overflow-y-auto  ">
         <table className="sticky w-full  table-auto text-left text-sm text-gray-100 rounded-2xl">
           <thead className="sticky top-0 bg-gray-900 z-10">
-            <tr className="text-gray-100 border-b ">
+            <tr className="text-gray-100 border-y border-gray-700 ">
               <th className="py-2 px-2">No</th>
               <th className="py-2">Tgl Pembayaran</th>
               <th className="py-2  hidden md:table-cell">Nominal (Rp)</th>
@@ -140,7 +140,7 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
               data.map((item, index) => (
                 <tr
                   key={index}
-                  className={`border-t px-2.5 py-3 ${
+                  className={`border-y px-2.5 py-3 ${
                     item.status ? "bg-green-600" : "bg-red-600/70"
                   }`}
                 >
@@ -177,7 +177,7 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
             ) : (
               <tr>
                 <td
-                  colSpan={session?.user?.role === "Admin" ? 5 : 4}
+                  colSpan={session?.user?.role === "Admin" ? 6 : 4}
                   className="text-center py-6 text-white/70 italic bg-gray-800 rounded-xl"
                 >
                   Belum ada pembayaran

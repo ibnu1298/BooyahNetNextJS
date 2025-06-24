@@ -41,10 +41,7 @@ export default function LoginForm() {
       });
 
       setTimeout(async () => {
-        const updatedSession = await getSession();
-        updatedSession?.user?.role == "Admin"
-          ? router.push("/dashboard")
-          : router.push("/");
+        router.push("/");
       }, 1500);
     }
   };

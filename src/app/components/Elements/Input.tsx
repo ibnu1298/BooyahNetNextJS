@@ -15,6 +15,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     disabled?: boolean;
   };
   rightIcon?: React.ReactNode;
+  tooltipMessage?: string;
 }
 
 export default function Input({
@@ -25,6 +26,7 @@ export default function Input({
   onPrefixChange,
   rightButton,
   rightIcon,
+  tooltipMessage,
   ...props
 }: InputProps) {
   const [showPassword, setShowPassword] = useState(false);
@@ -93,7 +95,10 @@ export default function Input({
 
         {/* 👇 Tampilkan icon di pojok kanan jika ada dan bukan password */}
         {!isPassword && rightIcon && (
-          <div className="absolute right-4 top-1/2 -translate-y-1/2 text-white">
+          <div
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-white"
+            title={tooltipMessage}
+          >
             {rightIcon}
           </div>
         )}

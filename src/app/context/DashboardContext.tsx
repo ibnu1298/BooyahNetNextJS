@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, ReactNode } from "react";
 
-export type DashboardView = "dashboard" | "profile" | "settings";
+export type DashboardView = "dashboard" | "profile" | "settings" | "admin";
 
 interface DashboardContextType {
   currentView: DashboardView;

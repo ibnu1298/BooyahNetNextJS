@@ -1,16 +1,17 @@
 "use client";
 
-import GreetingCard from "./GreetingCard";
-import ProfileView from "./ProfileView";
 import { useDashboard } from "@/app/context/DashboardContext";
+import GreetingCard from "./GreetingCard";
+import StatCards from "./StatCards";
+import ProfileView from "./ProfileView";
+import TabelPembayaran from "../Table/TablePembayaran";
+import { signOut, useSession } from "next-auth/react";
 import TabelUserPayment from "../Table/TableUserPayment";
 import { useEffect, useState } from "react";
-import { getUsers } from "@/utils/Fetch/getUsers";
-import { signOut, useSession } from "next-auth/react";
 import { ListUser } from "@/types/UserDetail";
-import TabelPembayaran from "../Table/TablePembayaran";
-import { decodedToken } from "@/app/interface/decodedToken";
 import { jwtDecode } from "jwt-decode";
+import { decodedToken } from "@/app/interface/decodedToken";
+import { getUsers } from "@/utils/Fetch/getUsers";
 // import SettingsView from './SettingsView'; (nanti)
 
 export default function MainDashboard() {
@@ -39,19 +40,30 @@ export default function MainDashboard() {
     getUsers(token).then((result) => {
       setData(result);
     });
-  }, [session, userId]);
+    console.log("hit");
+  }, [session, userId, dashboard?.currentView]);
   if (!dashboard) {
     return null; // atau tampilkan loading, error, dll
   }
 
   const { currentView } = dashboard;
   return (
-    <section className="flex-1 p-6 overflow-y-auto space-y-6">
+    <section className="max-w-3xl mx-auto flex-1 p-6 overflow-y-auto space-y-6">
       {currentView === "dashboard" && (
         <>
           <GreetingCard />
+          <StatCards />
+          <TabelPembayaran
+            token={session?.user?.token!}
+            user_id={session?.user?.user_id!}
+          />
+        </>
+      )}
+      {currentView === "admin" && (
+        <>
+          <GreetingCard />
           {/* <SalesChart />
-          <StatCards /> */}
+                <StatCards /> */}
           <TabelUserPayment
             data={data}
             onSelectUser={setUserId}

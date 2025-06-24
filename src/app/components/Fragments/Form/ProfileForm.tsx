@@ -6,12 +6,14 @@ import Button from "../../Elements/Button";
 import { getUserDetail } from "@/utils/Fetch/getUserDetail";
 import { UserDetail } from "@/types/UserDetail";
 import { useSession } from "next-auth/react";
+import { BadgeCheck, BadgeX } from "lucide-react";
 
 export default function ProfileForm() {
   const { data: session } = useSession();
   const [loading, setLoading] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
   const [user, setUser] = useState<UserDetail | null>(null);
+  const [verifyWANumber, setVerifyWANumber] = useState(false);
   console.log(`user:${user}`);
   console.log(`successMsg:${successMsg}`);
   useEffect(() => {
@@ -21,10 +23,11 @@ export default function ProfileForm() {
         setLoading(false);
       }
     );
-  }, [user]);
+    setVerifyWANumber(user?.verify_phone ?? false);
+  }, [user, session]);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {};
 
-  console.log(user);
+  console.log("verifyWANumber" + verifyWANumber);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -67,9 +70,31 @@ export default function ProfileForm() {
         type="text"
         name="Nomor Whatsapp"
         placeholder="Masukkan Nomor Whatsapp"
-        value={`+${user?.phone}` || ""}
+        value={user?.phone ? `+${user?.phone}` : ""}
         onChange={handleChange}
         required
+        rightIcon={
+          verifyWANumber ? (
+            <BadgeCheck
+              size={20}
+              strokeWidth={2.5}
+              absoluteStrokeWidth
+              className="text-green-300"
+            />
+          ) : (
+            <BadgeX
+              size={20}
+              strokeWidth={2.5}
+              absoluteStrokeWidth
+              className="text-gray-400"
+            />
+          )
+        }
+        tooltipMessage={
+          verifyWANumber
+            ? "WhatsApp terverifikasi ✅"
+            : "Belum terverifikasi ❌"
+        }
       />
       <Input
         label="Password"

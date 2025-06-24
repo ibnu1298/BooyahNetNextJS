@@ -29,12 +29,23 @@ export default function RightPanel() {
   }, []);
 
   const formatTime = (date: Date) =>
-    date.toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" });
+    date.toLocaleTimeString("id-ID", {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    });
+  const formatDate = (date: Date) =>
+    date.toLocaleDateString("id-ID", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    });
 
   return (
     <aside className="w-72 bg-gray-800 p-6 border-l border-gray-700 space-y-6 hidden lg:flex lg:flex-col">
       <div>
         <p className="text-sm text-gray-400">Current Time</p>
+        <h2 className="text-3xl font-bold mt-1">{formatDate(time)}</h2>
         <h2 className="text-3xl font-bold mt-1">{formatTime(time)}</h2>
       </div>
 

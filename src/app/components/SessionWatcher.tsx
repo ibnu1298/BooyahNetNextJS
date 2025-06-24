@@ -9,10 +9,10 @@ export default function SessionWatcher() {
   const { data: session } = useSession();
 
   useEffect(() => {
-    const token = session?.user?.refreshToken;
-    if (!token) return;
+    const interval = setInterval(() => {
+      const token = session?.user?.refreshToken;
+      if (!token) return;
 
-    try {
       const decoded = jwtDecode<decodedToken>(token);
       const now = Date.now() / 1000;
 
@@ -20,10 +20,9 @@ export default function SessionWatcher() {
         console.warn("🔴 Refresh token expired, signing out...");
         signOut({ callbackUrl: "/session-expired" });
       }
-    } catch (error) {
-      console.error("Token decode error:", error);
-      signOut({ callbackUrl: "/login" });
-    }
+    }, 25000); // cek setiap 60 detik
+
+    return () => clearInterval(interval);
   }, [session]);
 
   return null;

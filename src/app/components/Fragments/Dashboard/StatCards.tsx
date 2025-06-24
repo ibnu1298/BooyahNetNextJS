@@ -26,12 +26,12 @@ export default function StatCards() {
     data == undefined
       ? 0
       : data
-          .filter((item: Payment) => item.status === false)
+          .filter((item: any) => item.status === false)
           .reduce((total, item) => total + (Number(item.nominal) || 0), 0);
   const totalDataBelumLunas =
     data == undefined
       ? 0
-      : data.filter((item: Payment) => item.status === false).length;
+      : data.filter((item: any) => item.status === false).length;
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

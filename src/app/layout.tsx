@@ -1,8 +1,7 @@
 "use client";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { SessionProvider } from "next-auth/react";
-import Navbar from "./components/Fragments/Navbar";
+import { getSession, SessionProvider } from "next-auth/react";
 import SessionWatcher from "./components/SessionWatcher";
 
 const geistSans = Geist({

@@ -32,7 +32,7 @@ export default function NotificationModal({
           exit={{ y: "-100%", opacity: 0 }} // Keluar ke atas lagi
           transition={{ duration: 0.4 }}
           className={`fixed top-4 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-lg shadow-md text-white z-50 whitespace-nowrap overflow-hidden text-ellipsis max-w-[90vw] ${
-            type === "success" ? "bg-cyan-500" : "bg-red-900"
+            type === "success" ? "bg-green-600" : "bg-red-600"
           }`}
         >
           <div>{message}</div>

@@ -132,6 +132,7 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async jwt({ token, user }) {
+      console.log(">>> JWT Callback triggered");
       // First time login
       if (user?.token) {
         token.accessToken = user.token;
@@ -150,11 +151,12 @@ export const authOptions: NextAuthOptions = {
       const decoded = jwtDecode<decodedToken>(token.accessToken as string);
       const decodedref = jwtDecode<decodedToken>(token.refreshToken as string);
       console.log(
-        "accessToken : " + new Date(decoded.exp * 1000).toLocaleString()
+        "accessToken.exp : " + new Date(decoded.exp * 1000).toLocaleString()
       );
       console.log(
-        "refreshToken : " + new Date(decodedref.exp * 1000).toLocaleString()
+        "refreshToken.exp : " + new Date(decodedref.exp * 1000).toLocaleString()
       );
+      console.log("Sekarang : " + new Date(now * 1000).toLocaleString());
 
       if (decoded.exp && decoded.exp < now) {
         console.log("🔁 Token expired, refreshing...");

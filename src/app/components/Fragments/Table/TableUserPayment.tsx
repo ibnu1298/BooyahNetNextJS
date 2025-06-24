@@ -48,9 +48,9 @@ export default function TabelUserPayment({
         Daftar Pengguna & Riwayat Pembayaran
       </h2>
       <div className="max-h-[300px] overflow-y-auto  ">
-        <table className="min-w-full text-sm text-left text-white table-auto">
-          <thead className="border-b border-gray-700">
-            <tr>
+        <table className="sticky w-full  table-auto text-left text-sm text-gray-100 rounded-2xl">
+          <thead className="sticky -top-0.5 bg-gray-900 z-10">
+            <tr className="text-gray-100 border-b border-gray-700 ">
               <th className="px-2 py-2">No</th>
               <th className="px-2 py-2">Nama</th>
               <th className="px-2 py-2 hidden md:table-cell">Email</th>
@@ -99,7 +99,7 @@ export default function TabelUserPayment({
                 </td>
               </tr>
             )}
-            <tr className="border-t border-gray-800 text-md font-extrabold bg-gray-700">
+            <tr className="border-t border-gray-800 text-md font-extrabold bg-gray-700 sticky z-20 -bottom-0.5">
               {/* Mobile: colSpan 2 */}
               <td colSpan={2} className="px-4 py-2 md:hidden">
                 Total

@@ -1,6 +1,8 @@
 import { fetchWithAuth } from "../fetchWithAuth";
 
 export async function getUserDetail(userId: string, token: string) {
+  console.log("userid" + userId + "; token:" + token);
+
   const url = `${process.env.NEXT_PUBLIC_BASE_URL_API}/api/users/${userId}`;
 
   try {

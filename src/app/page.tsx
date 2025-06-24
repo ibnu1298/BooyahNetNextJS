@@ -1,22 +1,16 @@
-import { authOptions } from "@/lib/auth";
-import MainDashboard from "./components/Fragments/DashboardUser/MainDashboard";
+import MainDashboard from "./components/Fragments/Dashboard/MainDashboard";
 import { DashboardProvider } from "./context/DashboardContext";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
-import Navbar from "./components/Fragments/Navbar";
+import Sidebar from "./components/Fragments/Dashboard/Sidebar";
+import RightPanel from "./components/Fragments/Dashboard/RightPanel";
 
 export default async function DashboardPage() {
-  const session = await getServerSession(authOptions);
-
-  if (!session) {
-    redirect("/login");
-  }
   return (
     <DashboardProvider>
-      <div className="bg-[url('/images/bg.jpg')] bg-cover bg-fixed min-h-screen">
-        <Navbar />
-        <main className="flex-1 flex pt-16">
+      <div className="bg-[url('/images/bg.jpg')] bg-cover bg-fixed flex h-screen">
+        <Sidebar />
+        <main className="flex-1 flex">
           <MainDashboard />
+          <RightPanel />
         </main>
       </div>
     </DashboardProvider>
