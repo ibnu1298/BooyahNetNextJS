@@ -11,6 +11,8 @@ type Props = {
 
 export default function CreatePayment({ user_id, token, onSuccess }: Props) {
   const { data: session } = useSession();
+  console.log("CreatePayment");
+
   const [amount, setAmount] = useState<number>(100000);
   const [paidAt, setPaidAt] = useState<string>(
     new Date().toISOString().split("T")[0]

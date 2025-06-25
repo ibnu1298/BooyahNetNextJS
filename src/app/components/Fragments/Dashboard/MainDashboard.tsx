@@ -17,6 +17,8 @@ import { getUsers } from "@/utils/Fetch/getUsers";
 export default function MainDashboard() {
   const dashboard = useDashboard();
   const { data: session } = useSession();
+  console.log("MainDashboard");
+
   const [data, setData] = useState<ListUser[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
 

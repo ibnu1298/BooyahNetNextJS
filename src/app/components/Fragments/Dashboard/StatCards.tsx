@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 
 export default function StatCards() {
   const { data: session } = useSession();
+  console.log("StatCards");
+
   const [data, setData] = useState<Payment[]>([]);
   const [loading, setLoading] = useState(true);
 

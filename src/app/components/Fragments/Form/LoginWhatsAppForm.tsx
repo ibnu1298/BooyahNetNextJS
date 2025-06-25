@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Input from "../../Elements/Input";
 import Button from "../../Elements/Button";
-import { getSession, signIn } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import NotificationModal from "../Modal/NotificationModal";
 import { useRouter } from "next/navigation";
 

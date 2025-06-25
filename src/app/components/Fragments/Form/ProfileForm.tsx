@@ -10,12 +10,12 @@ import { BadgeCheck, BadgeX } from "lucide-react";
 
 export default function ProfileForm() {
   const { data: session } = useSession();
+  console.log("ProfileForm");
+
   const [loading, setLoading] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
   const [user, setUser] = useState<UserDetail | null>(null);
   const [verifyWANumber, setVerifyWANumber] = useState(false);
-  console.log(`user:${user}`);
-  console.log(`successMsg:${successMsg}`);
   useEffect(() => {
     getUserDetail(session?.user?.user_id!, session?.user?.token || "").then(
       (result: any) => {
@@ -24,7 +24,7 @@ export default function ProfileForm() {
       }
     );
     setVerifyWANumber(user?.verify_phone ?? false);
-  }, [user, session]);
+  }, [user]);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {};
 
   console.log("verifyWANumber" + verifyWANumber);

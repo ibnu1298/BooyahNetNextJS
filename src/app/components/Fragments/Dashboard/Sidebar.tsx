@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const menu: { icon: React.ReactNode; label: string; view: DashboardView }[] = [
   {
@@ -25,6 +26,14 @@ const menu: { icon: React.ReactNode; label: string; view: DashboardView }[] = [
 export default function Sidebar() {
   const dashboard = useDashboard();
   const { data: session } = useSession();
+  console.log("Sidebar");
+
+  const [role, setRole] = useState("User");
+
+  useEffect(() => {
+    setRole(session?.user?.role ?? "User");
+  }, []);
+
   const handleLogout = () => {
     signOut({ callbackUrl: "/login" });
   };
@@ -39,7 +48,7 @@ export default function Sidebar() {
       <aside className="hidden md:flex w-20 bg-gray-800 flex-col items-center py-6 space-y-6">
         <nav className="flex flex-col items-center gap-6 mt-10">
           {menu.map((item, i) => {
-            if (item.view === "admin" && session?.user?.role !== "Admin") {
+            if (item.view === "admin" && role !== "Admin") {
               return null; // Sembunyikan tombol admin untuk non-admin
             }
 
@@ -71,7 +80,7 @@ export default function Sidebar() {
       {/* Mobile Bottom Navigation */}
       <nav className="fixed bottom-0 left-0 right-0 z-50 bg-gray-800 border-t border-gray-700 flex justify-around items-center py-2 md:hidden">
         {menu.map((item, i) => {
-          if (item.view === "admin" && session?.user?.role !== "Admin") {
+          if (item.view === "admin" && role !== "Admin") {
             return null; // Sembunyikan tombol admin untuk non-admin
           }
 

@@ -24,6 +24,7 @@ export default withAuth(
         console.log(
           "❌Middleware Date.now() >= decoded.exp * 1000 && && pathname !== login"
         );
+
         return NextResponse.redirect(new URL("/session-expired", req.url));
       }
     }
