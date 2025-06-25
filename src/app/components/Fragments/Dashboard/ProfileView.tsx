@@ -1,19 +1,27 @@
 "use client";
 
 import Image from "next/image";
-import { Pencil } from "lucide-react";
+import { BadgeCheck, BadgeX, CircleUserRound, Pencil } from "lucide-react";
+import { UserDetail } from "@/types/UserDetail";
+import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import { getUserDetail } from "@/utils/Fetch/getUserDetail";
+import { formatPhone } from "@/utils/commonFunctions";
 
 export default function ProfileView() {
-  const user = {
-    name: "Budi Santoso",
-    email: "budi@example.com",
-    photoUrl: "/man-avatar.svg",
-    role: "Admin",
-    phone: 828762364543,
-    address: "dimana ini yaa",
-    birthDate: "20 September 1999",
-  };
-
+  const [user, setUser] = useState<UserDetail | null>(null);
+  const { data: session } = useSession();
+  const [loading, setLoading] = useState(false);
+  const [verifyWANumber, setVerifyWANumber] = useState(false);
+  useEffect(() => {
+    getUserDetail(session?.user?.user_id!, session?.user?.token || "").then(
+      (result: any) => {
+        setUser(result);
+        setLoading(false);
+      }
+    );
+    setVerifyWANumber(user?.verify_phone ?? false);
+  }, [user]);
   return (
     <div className="space-y-6">
       {/* Section 1: Profile Header */}
@@ -21,16 +29,22 @@ export default function ProfileView() {
         <div className="flex items-center justify-between">
           {/* Kiri: Foto + Info */}
           <div className="flex items-center gap-4">
-            <Image
-              src={user.photoUrl}
-              alt="Foto Profil"
-              width={64}
-              height={64}
-              className="rounded-full border border-white"
-            />
+            {user?.photoUrl ? (
+              <Image
+                src={user?.photoUrl}
+                alt="Foto Profil"
+                width={64}
+                height={64}
+                className="rounded-full border border-white"
+              />
+            ) : (
+              <CircleUserRound size={64} />
+            )}
             <div>
-              <h3 className="text-lg font-semibold">{user.name}</h3>
-              <p className="text-sm font-thin  text-white/80">{user.role}</p>
+              <h3 className="text-lg font-semibold">{user?.name}</h3>
+              <p className="text-sm font-thin  text-white/80">
+                {session?.user?.role}
+              </p>
             </div>
           </div>
 
@@ -51,30 +65,45 @@ export default function ProfileView() {
               <div className="text-sm text-white/30 font-extralight">
                 Nama Lengkap
               </div>
-              <div className="text-white font-extralight">{user.name}</div>
+              <div className="text-white font-extralight">{user?.name}</div>
             </div>
             <div id="email">
               <div className="text-sm text-white/30 font-extralight">Email</div>
-              <div className="text-white font-extralight">{user.email}</div>
+              <div className="text-white font-extralight">{user?.email}</div>
             </div>
-            <div id="phone">
-              <div className="text-sm text-white/30 font-extralight">
-                Nomor Telepon
+            <div id="phone" className="flex items-center gap-4">
+              <div>
+                <div className="text-sm text-white/30 font-extralight">
+                  Nomor Telepon
+                </div>
+                <div className="text-white font-extralight">
+                  {formatPhone(user?.phone ?? "-")}
+                </div>
               </div>
-              <div className="text-white font-extralight">{user.phone}</div>
+              {verifyWANumber ? (
+                <BadgeCheck
+                  size={25}
+                  strokeWidth={3}
+                  absoluteStrokeWidth
+                  className="text-green-300"
+                />
+              ) : (
+                <BadgeX
+                  size={25}
+                  strokeWidth={3}
+                  absoluteStrokeWidth
+                  className="text-gray-400"
+                />
+              )}
             </div>
             {/* Kolom tambahan */}
             <div id="alamat">
               <div className="text-sm text-white/30 font-extralight">
                 Alamat
               </div>
-              <div className="text-white font-extralight">{user.address}</div>
-            </div>
-            <div id="ttl">
-              <div className="text-sm text-white/30 font-extralight">
-                Tanggal Lahir
+              <div className="text-white font-extralight">
+                {user?.address ?? "-"}
               </div>
-              <div className="text-white font-extralight">{user.birthDate}</div>
             </div>
           </div>
 

@@ -48,3 +48,13 @@ export function nextBillingDate(dateString: string): string {
     year: "numeric",
   });
 }
+
+export function formatPhone(phone: string): string {
+  // Hilangkan awalan 62 dan tambahkan 0
+  if (phone.startsWith("62")) {
+    phone = "0" + phone.slice(2);
+  }
+
+  // Format jadi XXXX-XXXX-XXXX
+  return phone.replace(/(\d{4})(\d{4})(\d{4})/, "$1-$2-$3");
+}

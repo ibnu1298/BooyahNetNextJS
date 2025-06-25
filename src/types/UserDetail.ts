@@ -2,6 +2,7 @@ export type UserDetail = {
   user_id: string;
   name: string;
   email: string;
+  photoUrl: string;
   verify_email: boolean;
   phone: string | null;
   verify_phone: boolean | null;

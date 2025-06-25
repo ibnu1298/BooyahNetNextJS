@@ -19,7 +19,7 @@ const menu: { icon: React.ReactNode; label: string; view: DashboardView }[] = [
     label: "Dashboard",
     view: "dashboard",
   },
-  { icon: <ShieldUser />, label: "Admin Dashboard", view: "admin" },
+  { icon: <ShieldUser />, label: "Admin", view: "admin" },
   { icon: <User size={20} />, label: "Profile", view: "profile" },
   { icon: <Settings size={20} />, label: "Settings", view: "settings" },
 ];
@@ -28,11 +28,11 @@ export default function Sidebar() {
   const { data: session } = useSession();
   console.log("Sidebar");
 
-  const [role, setRole] = useState("User");
+  const [role, setRole] = useState("");
 
   useEffect(() => {
-    setRole(session?.user?.role ?? "User");
-  }, []);
+    setRole(session?.user?.role!);
+  }, [session]);
 
   const handleLogout = () => {
     signOut({ callbackUrl: "/login" });
@@ -95,7 +95,7 @@ export default function Sidebar() {
               }`}
             >
               {item.icon}
-              <span>{item.label}</span>
+              {/* <span>{item.label}</span> */}
             </button>
           );
         })}
@@ -104,7 +104,7 @@ export default function Sidebar() {
           className="flex flex-col items-center text-xs text-gray-400 hover:text-red-400"
         >
           <LogOut size={20} />
-          <span>Logout</span>
+          {/* <span>Logout</span> */}
         </button>
       </nav>
     </>
