@@ -12,9 +12,9 @@ export default function ProfileForm() {
   const { data: session } = useSession();
   console.log("ProfileForm");
 
-  const [loading, setLoading] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
   const [user, setUser] = useState<UserDetail | null>(null);
+  const [loading, setLoading] = useState(false);
   const [verifyWANumber, setVerifyWANumber] = useState(false);
   useEffect(() => {
     getUserDetail(session?.user?.user_id!, session?.user?.token || "").then(

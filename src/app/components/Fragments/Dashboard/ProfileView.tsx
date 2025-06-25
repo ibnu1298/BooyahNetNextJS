@@ -1,12 +1,18 @@
 "use client";
 
 import Image from "next/image";
-import { BadgeCheck, BadgeX, CircleUserRound, Pencil } from "lucide-react";
+import {
+  BadgeCheck,
+  BadgeX,
+  CircleUserRound,
+  KeyRound,
+  Pencil,
+} from "lucide-react";
 import { UserDetail } from "@/types/UserDetail";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { getUserDetail } from "@/utils/Fetch/getUserDetail";
-import { formatPhone } from "@/utils/commonFunctions";
+import { capitalizeName, formatPhone } from "@/utils/commonFunctions";
 
 export default function ProfileView() {
   const [user, setUser] = useState<UserDetail | null>(null);
@@ -41,18 +47,14 @@ export default function ProfileView() {
               <CircleUserRound size={64} />
             )}
             <div>
-              <h3 className="text-lg font-semibold">{user?.name}</h3>
+              <h3 className="text-xl font-semibold">
+                {capitalizeName(user?.name ?? "")}
+              </h3>
               <p className="text-sm font-thin  text-white/80">
                 {session?.user?.role}
               </p>
             </div>
           </div>
-
-          {/* Kanan: Tombol Edit */}
-          <button className="flex items-center gap-2 border border-white text-white hover:bg-white/10 px-4 py-2 rounded-full transition">
-            <Pencil className="w-4 h-4" />
-            Edit
-          </button>
         </div>
       </div>
 
@@ -80,20 +82,26 @@ export default function ProfileView() {
                   {formatPhone(user?.phone ?? "-")}
                 </div>
               </div>
-              {verifyWANumber ? (
-                <BadgeCheck
-                  size={25}
-                  strokeWidth={3}
-                  absoluteStrokeWidth
-                  className="text-green-300"
-                />
+              {user?.phone ? (
+                <>
+                  {verifyWANumber ? (
+                    <BadgeCheck
+                      size={25}
+                      strokeWidth={3}
+                      absoluteStrokeWidth
+                      className="text-green-300"
+                    />
+                  ) : (
+                    <BadgeX
+                      size={25}
+                      strokeWidth={3}
+                      absoluteStrokeWidth
+                      className="text-gray-400"
+                    />
+                  )}
+                </>
               ) : (
-                <BadgeX
-                  size={25}
-                  strokeWidth={3}
-                  absoluteStrokeWidth
-                  className="text-gray-400"
-                />
+                <></>
               )}
             </div>
             {/* Kolom tambahan */}
@@ -116,10 +124,10 @@ export default function ProfileView() {
       </div>
       {/* Section 3: Tambahan Konten */}
       <div className="max-w-3xl mx-auto bg-gray-800 p-6 rounded-2xl shadow-lg">
-        <h3 className="text-lg font-semibold mb-2">Informasi Tambahan</h3>
-        <p className="text-white/80">
-          Silakan lengkapi informasi profil Anda di sini.
-        </p>
+        <div className="flex gap-1">
+          <KeyRound size={23} className=" " />
+          <h3 className="text-lg font-semibold mb-2">Ganti Password</h3>
+        </div>
       </div>
     </div>
   );

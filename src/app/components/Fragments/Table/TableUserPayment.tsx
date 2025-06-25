@@ -48,77 +48,81 @@ export default function TabelUserPayment({
         Daftar Pengguna & Riwayat Pembayaran
       </h2>
       <div className="max-h-[300px] overflow-y-auto  ">
-        <table className="sticky w-full  table-auto text-left text-sm text-gray-100 rounded-2xl">
-          <thead className="sticky -top-0.5 bg-gray-900 z-10">
-            <tr className="text-gray-100 border-b border-gray-700 ">
-              <th className="px-2 py-2">No</th>
-              <th className="px-2 py-2">Nama</th>
-              <th className="px-2 py-2 hidden md:table-cell">Email</th>
-              <th className="px-2 py-2 hidden md:table-cell">Role</th>
-              <th className="px-2 py-2">Belum Lunas</th>
-              <th className="px-2 py-2">Lunas</th>
-              <th className="px-2 py-2">Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data?.length > 0 ? (
-              data.map((user, index) => (
-                <tr
-                  key={user.id}
-                  onClick={() => onSelectUser(user.id)}
-                  className={`cursor-pointer border-t border-gray-800 hover:bg-gray-800/50 ${
-                    user_id === user.id
-                      ? "bg-green-600/50 border-l-4 border-blue-500"
-                      : ""
-                  }`}
-                >
-                  <td className="px-4 py-2">{index + 1}</td>
-                  <td className="px-4 py-2 capitalize">{user.name}</td>
-                  <td className="px-4 py-2 hidden md:table-cell">
-                    {user.email}
-                  </td>
-                  <td className="px-4 py-2 hidden md:table-cell">
-                    {user.role_name}
-                  </td>
-                  <td className="px-4 py-2 text-red-400">
-                    {user.unpaid_payments}
-                  </td>
-                  <td className="px-4 py-2 text-green-400">
-                    {user.paid_payments}
-                  </td>
-                  <td className="px-4 py-2 font-bold">{user.total_payments}</td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td
-                  colSpan={7}
-                  className="text-center py-4 italic text-gray-300"
-                >
-                  Tidak ada data pengguna
-                </td>
+        <div className="w-full overflow-x-auto px-2">
+          <table className="w-full table-fixed text-left text-sm text-gray-100">
+            <thead className="sticky -top-0.5 bg-gray-900 z-10">
+              <tr className="text-gray-100 border-b border-gray-700 ">
+                <th className="px-2 py-2">No</th>
+                <th className="px-2 py-2">Nama</th>
+                <th className="px-2 py-2 hidden md:table-cell">Email</th>
+                <th className="px-2 py-2 hidden md:table-cell">Role</th>
+                <th className="px-2 py-2">Belum Lunas</th>
+                <th className="px-2 py-2">Lunas</th>
+                <th className="px-2 py-2">Total</th>
               </tr>
-            )}
-            <tr className="border-t border-gray-800 text-md font-extrabold bg-gray-700 sticky z-20 -bottom-0.5">
-              {/* Mobile: colSpan 2 */}
-              <td colSpan={2} className="px-4 py-2 md:hidden">
-                Total
-              </td>
+            </thead>
+            <tbody>
+              {data?.length > 0 ? (
+                data.map((user, index) => (
+                  <tr
+                    key={user.id}
+                    onClick={() => onSelectUser(user.id)}
+                    className={`cursor-pointer border-t border-gray-800 hover:bg-gray-800/50 ${
+                      user_id === user.id
+                        ? "bg-green-600/50 border-l-4 border-blue-500"
+                        : ""
+                    }`}
+                  >
+                    <td className="px-4 py-2">{index + 1}</td>
+                    <td className="px-4 py-2 capitalize">{user.name}</td>
+                    <td className="px-4 py-2 hidden md:table-cell truncate max-w-[180px]">
+                      {user.email}
+                    </td>
+                    <td className="px-4 py-2 hidden md:table-cell">
+                      {user.role_name}
+                    </td>
+                    <td className="px-4 py-2 text-red-400">
+                      {user.unpaid_payments}
+                    </td>
+                    <td className="px-4 py-2 text-green-400">
+                      {user.paid_payments}
+                    </td>
+                    <td className="px-4 py-2 font-bold">
+                      {user.total_payments}
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td
+                    colSpan={7}
+                    className="text-center py-4 italic text-gray-300"
+                  >
+                    Tidak ada data pengguna
+                  </td>
+                </tr>
+              )}
+              <tr className="border-t border-gray-800 text-md font-extrabold bg-gray-700 sticky z-20 -bottom-0.5">
+                {/* Mobile: colSpan 2 */}
+                <td colSpan={2} className="px-4 py-2 md:hidden">
+                  Total
+                </td>
 
-              {/* Desktop: colSpan 4 */}
-              <td colSpan={4} className="px-4 py-2 hidden md:table-cell">
-                Total
-              </td>
-              <td className="px-4 py-2 text-red-400">
-                {payments?.unpaid ?? 0}
-              </td>
-              <td className="px-4 py-2 text-green-400">
-                {payments?.paid ?? 0}
-              </td>
-              <td className="px-4 py-2 font-bold">{payments?.total ?? 0}</td>
-            </tr>
-          </tbody>
-        </table>
+                {/* Desktop: colSpan 4 */}
+                <td colSpan={4} className="px-4 py-2 hidden md:table-cell">
+                  Total
+                </td>
+                <td className="px-4 py-2 text-red-400">
+                  {payments?.unpaid ?? 0}
+                </td>
+                <td className="px-4 py-2 text-green-400">
+                  {payments?.paid ?? 0}
+                </td>
+                <td className="px-4 py-2 font-bold">{payments?.total ?? 0}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

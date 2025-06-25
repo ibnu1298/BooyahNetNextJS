@@ -42,7 +42,7 @@ export default function RightPanel() {
     });
 
   return (
-    <aside className="w-72 bg-gray-800 p-6 border-l border-gray-700 space-y-6 hidden lg:flex lg:flex-col">
+    <aside className="w-72 bg-gray-800 p-6 border-l border-gray-700 space-y-6 hidden md:flex md:flex-col">
       <div>
         <p className="text-sm text-gray-400">Current Time</p>
         <h2 className="text-3xl font-bold mt-1">{formatDate(time)}</h2>

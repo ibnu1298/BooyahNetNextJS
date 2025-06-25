@@ -18,21 +18,18 @@ export default withAuth(
         "middleware-refresftoken: " +
           new Date(decoded.exp * 1000).toLocaleString()
       );
+      console.log("masuk sini");
 
       if (Date.now() >= decoded.exp * 1000 && pathname !== "/login") {
-        // redirect ke session expired page
-        console.log(
-          "❌Middleware Date.now() >= decoded.exp * 1000 && && pathname !== login"
-        );
-
         return NextResponse.redirect(new URL("/session-expired", req.url));
       }
     }
+    if (token?.refreshToken == undefined && pathname !== "/login") {
+      return NextResponse.redirect(new URL("/login", req.url));
+    }
+
     // ❌ Token default (tanpa accessToken), kita anggap invalid → paksa signout
     if (token && !token.refreshToken && pathname !== "/login") {
-      console.log(
-        "❌Middleware token && !token.refreshToken && pathname !== login"
-      );
       return NextResponse.redirect(new URL("/session-expired", req.url));
     }
 

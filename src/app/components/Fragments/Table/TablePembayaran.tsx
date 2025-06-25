@@ -120,72 +120,76 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
       </div>
       <hr />
       <div className="max-h-[300px] overflow-y-auto  ">
-        <table className="sticky w-full  table-auto text-left text-sm text-gray-100 rounded-2xl">
-          <thead className="sticky top-0 bg-gray-900 z-10">
-            <tr className="text-gray-100 border-y border-gray-700 ">
-              <th className="py-2 px-2">No</th>
-              <th className="py-2">Tgl Pembayaran</th>
-              <th className="py-2  hidden md:table-cell">Nominal (Rp)</th>
-              <th className="py-2">Status</th>
-              {session?.user?.role === "Admin" && (
-                <th className="py-2 hidden md:table-cell">Bayar</th>
-              )}
-              {session?.user?.role === "Admin" && (
-                <th className="py-2">Aksi</th>
-              )}
-            </tr>
-          </thead>
-          <tbody>
-            {data && data != undefined ? (
-              data.map((item, index) => (
-                <tr
-                  key={index}
-                  className={`border-y px-2.5 py-3 ${
-                    item.status ? "bg-green-600" : "bg-red-600/70"
-                  }`}
-                >
-                  <td className="p-2">{index + 1}</td>
-                  <td className="p-2">{formatTanggal(item.tanggal)}</td>
-                  <td className="p-2 hidden md:table-cell">
-                    {item.nominal.toLocaleString("id-ID")}
-                  </td>
-                  <td className="p-2 font-bold text-white  ">
-                    {item.status ? "Lunas" : "Belum Lunas"}
-                  </td>
-                  {session?.user?.role === "Admin" && (
-                    <td className="p-2 hidden md:table-cell">
-                      <input
-                        type="checkbox"
-                        checked={item.status}
-                        onChange={() => handleToggle(item)}
-                        className="w-4 h-4 cursor-pointer accent-green-500"
-                      />
-                    </td>
-                  )}
-                  {session?.user?.role === "Admin" && (
-                    <td className="p-2">
-                      <button
-                        onClick={() => openEditModal(item)}
-                        className=" text-white p-2 rounded text-xs hover:flex hover:bg-gray-600/30"
-                      >
-                        <SquarePen size={15} />
-                      </button>
-                    </td>
-                  )}
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td
-                  colSpan={session?.user?.role === "Admin" ? 6 : 4}
-                  className="text-center py-6 text-white/70 italic bg-gray-800 rounded-xl"
-                >
-                  Belum ada pembayaran
-                </td>
+        <div className="w-full overflow-x-auto px-2">
+          <table className="w-full table-fixed text-left text-sm text-gray-100 rounded-2xl">
+            <thead className="sticky top-0 bg-gray-900 z-10">
+              <tr className="text-gray-100 border-y border-gray-700">
+                <th className="py-2 px-2 w-6">No</th>
+                <th className="py-2 w-36">Tgl</th>
+                <th className="py-2 hidden md:table-cell w-36">Nominal</th>
+                <th className="py-2 w-24">Status</th>
+                {session?.user?.role === "Admin" && (
+                  <th className="py-2 hidden md:table-cell w-16">Bayar</th>
+                )}
+                {session?.user?.role === "Admin" && (
+                  <th className="py-2 w-10">Aksi</th>
+                )}
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {data && data.length > 0 ? (
+                data.map((item, index) => (
+                  <tr
+                    key={index}
+                    className={`border-y ${
+                      item.status ? "bg-green-600" : "bg-red-600/70"
+                    }`}
+                  >
+                    <td className="p-2 break-words">{index + 1}</td>
+                    <td className="p-2 break-words">
+                      {formatTanggal(item.tanggal)}
+                    </td>
+                    <td className="p-2 hidden md:table-cell break-words">
+                      {item.nominal.toLocaleString("id-ID")}
+                    </td>
+                    <td className="p-2 font-bold text-white">
+                      {item.status ? "Lunas" : "Belum Lunas"}
+                    </td>
+                    {session?.user?.role === "Admin" && (
+                      <td className="p-2 hidden md:table-cell">
+                        <input
+                          type="checkbox"
+                          checked={item.status}
+                          onChange={() => handleToggle(item)}
+                          className="w-4 h-4 cursor-pointer accent-green-500"
+                        />
+                      </td>
+                    )}
+                    {session?.user?.role === "Admin" && (
+                      <td className="p-2">
+                        <button
+                          onClick={() => openEditModal(item)}
+                          className="text-white p-2 rounded text-xs hover:bg-gray-600/30"
+                        >
+                          <SquarePen size={15} />
+                        </button>
+                      </td>
+                    )}
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td
+                    colSpan={session?.user?.role === "Admin" ? 6 : 4}
+                    className="text-center py-6 text-white/70 italic bg-gray-800"
+                  >
+                    Belum ada pembayaran
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
         {showModal && (
           <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 px-5 lg:px-1">
             <div
