@@ -23,11 +23,13 @@ export default withAuth(
         return NextResponse.redirect(new URL("/session-expired", req.url));
       }
     }
-    // if (token?.refreshToken == undefined && pathname !== "/login") {
-    //   return NextResponse.redirect(new URL("/login", req.url));
-    // }
 
-    // ❌ Token default (tanpa accessToken), kita anggap invalid → paksa signout
+    // ❌ Kalau token tidak ada (belum login) dan bukan di /login atau /register → redirect ke /login
+    if (!token && !["/login", "/register"].includes(pathname)) {
+      return NextResponse.redirect(new URL("/login", req.url));
+    }
+
+    // ❌ Token default (tanpa refreshToken), kita anggap invalid → paksa signout
     if (token && !token.refreshToken && pathname !== "/login") {
       return NextResponse.redirect(new URL("/session-expired", req.url));
     }
