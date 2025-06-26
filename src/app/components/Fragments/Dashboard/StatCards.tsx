@@ -40,7 +40,7 @@ export default function StatCards() {
       <div className="bg-gray-800 p-4 rounded-2xl flex items-center justify-between">
         <div>
           <p className="text-sm text-gray-400">Total Tagihan</p>
-          <h3 className="text-xl font-semibold">
+          <h3 className="text-xl font-semibold text-white">
             {!loading ? (
               <>Rp {totalBelumLunas.toLocaleString("id-ID")}</>
             ) : (
@@ -55,7 +55,7 @@ export default function StatCards() {
             )}
           </p>
         </div>
-        <div className="bg-gray-700 p-2 rounded-lg">
+        <div className="bg-gray-700 p-2 rounded-lg text-white">
           <BanknoteX size={20} />
         </div>
       </div>

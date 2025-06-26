@@ -111,7 +111,7 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
         <h2 className="text-xl font-semibold mb-4 text-gray-100">
           Data Pembayaran
         </h2>
-        <div>
+        <div className="text-white">
           <div className="text-xs">Tagihan Selanjutnya</div>
           <div className="font-bold">
             {nextBillingDate(user?.billing_date!)}
