@@ -74,7 +74,7 @@ export default function ProfileView() {
       <div className="max-w-3xl mx-auto">
         <button
           onClick={handleLogout}
-          className="w-full bg-red-600 rounded-2xl shadow-lg flex items-center justify-center gap-2 
+          className="w-full mb-6 bg-red-600 rounded-2xl shadow-lg flex items-center justify-center gap-2 
                font-semibold px-6 py-3 hover:bg-red-800 active:bg-red-900 transition text-white cursor-pointer"
         >
           <LogOut size={20} strokeWidth={3} /> Logout
