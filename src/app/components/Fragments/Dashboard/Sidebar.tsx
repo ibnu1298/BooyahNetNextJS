@@ -5,7 +5,6 @@ import {
   Home,
   User,
   Settings,
-  LogOut,
   LayoutDashboard,
   ShieldUser,
 } from "lucide-react";
@@ -20,8 +19,8 @@ const menu: { icon: React.ReactNode; label: string; view: DashboardView }[] = [
     view: "dashboard",
   },
   { icon: <ShieldUser />, label: "Admin", view: "admin" },
+  // { icon: <Settings size={20} />, label: "Settings", view: "settings" },
   { icon: <User size={20} />, label: "Profile", view: "profile" },
-  { icon: <Settings size={20} />, label: "Settings", view: "settings" },
 ];
 export default function Sidebar() {
   const dashboard = useDashboard();
@@ -34,9 +33,6 @@ export default function Sidebar() {
     setRole(session?.user?.role!);
   }, [session]);
 
-  const handleLogout = () => {
-    signOut({ callbackUrl: "/login" });
-  };
   if (!dashboard) {
     return null; // atau tampilkan loading, error, dll
   }
@@ -67,13 +63,6 @@ export default function Sidebar() {
               </button>
             );
           })}
-          <button
-            className="w-10 h-10 flex items-center justify-center rounded-lg transition-all bg-gray-700 text-gray-400 hover:bg-gray-600"
-            title="LogOut"
-            onClick={handleLogout}
-          >
-            <LogOut size={20} />
-          </button>
         </nav>
       </aside>
 
@@ -95,17 +84,10 @@ export default function Sidebar() {
               }`}
             >
               {item.icon}
-              {/* <span>{item.label}</span> */}
+              <span>{item.label}</span>
             </button>
           );
         })}
-        <button
-          onClick={handleLogout}
-          className="flex flex-col items-center text-xs text-gray-400 hover:text-red-400"
-        >
-          <LogOut size={20} />
-          {/* <span>Logout</span> */}
-        </button>
       </nav>
     </>
   );

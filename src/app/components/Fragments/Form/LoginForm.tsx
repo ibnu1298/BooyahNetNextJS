@@ -65,7 +65,7 @@ export default function LoginForm() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <div className="flex items-center justify-between text-sm text-white">
+        {/* <div className="flex items-center justify-between text-sm text-white">
           <label className="flex items-center gap-2">
             <input type="checkbox" className="accent-purple-500" />
             Remember me
@@ -73,7 +73,7 @@ export default function LoginForm() {
           <a href="#" className="hover:underline">
             Forgot password?
           </a>
-        </div>
+        </div> */}
         <Button type="submit">Login</Button>
       </form>
       <NotificationModal

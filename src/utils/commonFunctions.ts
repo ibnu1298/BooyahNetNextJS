@@ -53,8 +53,32 @@ export function formatPhone(phone: string): string {
   // Hilangkan awalan 62 dan tambahkan 0
   if (phone.startsWith("62")) {
     phone = "0" + phone.slice(2);
+  } else {
+    phone = "+" + phone;
   }
 
   // Format jadi XXXX-XXXX-XXXX
   return phone.replace(/(\d{4})(\d{4})(\d{4})/, "$1-$2-$3");
+}
+
+export function validatePassword(password: string): string[] {
+  const errors: string[] = [];
+
+  if (password.length < 8) {
+    errors.push("Minimal 8 karakter");
+  }
+  if (!/[A-Z]/.test(password)) {
+    errors.push("Harus mengandung huruf besar (A-Z)");
+  }
+  if (!/[a-z]/.test(password)) {
+    errors.push("Harus mengandung huruf kecil (a-z)");
+  }
+  if (!/[0-9]/.test(password)) {
+    errors.push("Harus mengandung angka (0-9)");
+  }
+  if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+    errors.push("Harus mengandung simbol (!@#$...)");
+  }
+
+  return errors;
 }

@@ -54,7 +54,7 @@ export default function Input({
             <select
               value={prefix}
               onChange={(e) => onPrefixChange?.(e.target.value)}
-              className="bg-white/20 text-white px-3 h-12"
+              className="bg-white/20 text-white px-2 h-12"
             >
               {phonePrefixOptions.map((opt) => (
                 <option

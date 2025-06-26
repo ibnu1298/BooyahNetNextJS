@@ -18,7 +18,6 @@ export default withAuth(
         "middleware-refresftoken: " +
           new Date(decoded.exp * 1000).toLocaleString()
       );
-      console.log("masuk sini");
 
       if (Date.now() >= decoded.exp * 1000 && pathname !== "/login") {
         return NextResponse.redirect(new URL("/session-expired", req.url));

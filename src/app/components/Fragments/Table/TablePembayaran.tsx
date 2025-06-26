@@ -125,7 +125,7 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
             <thead className="sticky top-0 bg-gray-900 z-10">
               <tr className="text-gray-100 border-y border-gray-700">
                 <th className="py-2 px-2 w-6">No</th>
-                <th className="py-2 w-36">Tgl</th>
+                <th className="p-2 w-36">Tanggal </th>
                 <th className="py-2 hidden md:table-cell w-36">Nominal</th>
                 <th className="py-2 w-24">Status</th>
                 {session?.user?.role === "Admin" && (
