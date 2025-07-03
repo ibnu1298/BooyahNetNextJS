@@ -1,10 +1,10 @@
 import { fetchWithAuth } from "../fetchWithAuth";
 
 export async function updatePaidAt(
-  payload: UpdatePaidAtPayload,
+  payload: UpdatePaymentPayload,
   token: string
 ) {
-  const url = `${process.env.NEXT_PUBLIC_BASE_URL_API}/api/payments/update-paid-at`;
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL_API}/api/payments/update`;
 
   try {
     const res = await fetchWithAuth(url, token, {

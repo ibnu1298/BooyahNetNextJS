@@ -12,8 +12,13 @@ import { ListUser } from "@/types/UserDetail";
 import { jwtDecode } from "jwt-decode";
 import { decodedToken } from "@/app/interface/decodedToken";
 import { getUsers } from "@/utils/Fetch/getUsers";
+import TableUserDetail from "../Table/TableUserDetail";
 // import SettingsView from './SettingsView'; (nanti)
-
+const tabs = [
+  { key: "payment", label: "Payments" },
+  { key: "settings", label: "Settings" },
+  // { key: "email-otp", label: "Email" },
+];
 export default function MainDashboard() {
   const dashboard = useDashboard();
   const { data: session } = useSession();
@@ -47,6 +52,41 @@ export default function MainDashboard() {
   if (!dashboard) {
     return null; // atau tampilkan loading, error, dll
   }
+  const [activeTab, setActiveTab] = useState("payment");
+  const renderForm = () => {
+    switch (activeTab) {
+      case "payment":
+        return (
+          <>
+            <TabelUserPayment
+              data={data}
+              onSelectUser={setUserId}
+              user_id={userId!}
+            />
+            <TabelPembayaran
+              token={session?.user?.token!}
+              user_id={userId!}
+              onUpdated={() => {
+                if (!session?.user?.token) return;
+                getUsers(session.user.token).then((result) => {
+                  setData(result);
+                });
+              }}
+            />
+          </>
+        );
+      case "settings":
+        return (
+          <>
+            <TableUserDetail />
+          </>
+        );
+      case "email-otp":
+        return <div className="text-white">Form Email OTP belum dibuat</div>; // Ganti dengan <LoginEmailOTPForm />
+      default:
+        return null;
+    }
+  };
 
   const { currentView } = dashboard;
   return (
@@ -63,24 +103,25 @@ export default function MainDashboard() {
       )}
       {currentView === "admin" && (
         <>
-          <GreetingCard />
-          {/* <SalesChart />
-                <StatCards /> */}
-          <TabelUserPayment
-            data={data}
-            onSelectUser={setUserId}
-            user_id={userId!}
-          />
-          <TabelPembayaran
-            token={session?.user?.token!}
-            user_id={userId!}
-            onUpdated={() => {
-              if (!session?.user?.token) return;
-              getUsers(session.user.token).then((result) => {
-                setData(result);
-              });
-            }}
-          />
+          <div className="min-h-[100px] transition-all duration-300 grid gap-6">
+            <GreetingCard />
+            <div className="flex justify-center gap-2 text-sm">
+              {tabs.map((tab) => (
+                <button
+                  key={tab.key}
+                  className={`px-3 py-1 rounded-full ${
+                    activeTab === tab.key
+                      ? "bg-cyan-600  text-white"
+                      : "bg-white/10 text-gray-200"
+                  }`}
+                  onClick={() => setActiveTab(tab.key)}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+            {renderForm()}
+          </div>
         </>
       )}
 

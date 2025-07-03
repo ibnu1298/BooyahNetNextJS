@@ -32,7 +32,7 @@ export default function RightPanel() {
     date.toLocaleTimeString("id-ID", {
       hour: "2-digit",
       minute: "2-digit",
-      second: "2-digit",
+      // second: "2-digit",
     });
   const formatDate = (date: Date) =>
     date.toLocaleDateString("id-ID", {

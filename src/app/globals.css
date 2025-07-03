@@ -42,3 +42,7 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #6b7280; /* hover lebih terang */
 }
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1); /* Bikin icon jadi putih */
+}

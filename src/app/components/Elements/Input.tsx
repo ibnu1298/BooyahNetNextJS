@@ -72,7 +72,7 @@ export default function Input({
             {...props}
             type={isPassword && showPassword ? "text" : type}
             onChange={handleChange}
-            className="flex-1 h-12 pl-4 bg-transparent text-white placeholder-gray-300 placeholder-opacity-70 focus:placeholder-transparent focus:outline-none"
+            className="flex-1 h-12 px-4  bg-transparent text-white placeholder-gray-300 placeholder-opacity-70 focus:placeholder-transparent focus:outline-none"
             inputMode={isPhoneNumber ? "numeric" : undefined}
             pattern={isPhoneNumber ? "[0-9]*" : undefined}
           />

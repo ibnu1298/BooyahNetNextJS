@@ -1,3 +1,5 @@
+import { phonePrefixOptions } from "@/constants/phonePrefixes";
+
 export function capitalizeName(name: string) {
   return name
     .split(" ")
@@ -50,15 +52,21 @@ export function nextBillingDate(dateString: string): string {
 }
 
 export function formatPhone(phone: string): string {
-  // Hilangkan awalan 62 dan tambahkan 0
-  if (phone.startsWith("62")) {
-    phone = "0" + phone.slice(2);
-  } else {
-    phone = "+" + phone;
+  const matchedPrefix = phonePrefixOptions.find((option) =>
+    phone.startsWith(option.value)
+  );
+
+  if (!matchedPrefix) {
+    return phone; // Jika tidak cocok, kembalikan apa adanya
   }
 
-  // Format jadi XXXX-XXXX-XXXX
-  return phone.replace(/(\d{4})(\d{4})(\d{4})/, "$1-$2-$3");
+  // Jika prefix "62", ubah jadi format Indonesia (awali dengan 0)
+  if (matchedPrefix.value === "62") {
+    return "0" + phone.slice(2);
+  }
+
+  // Selain itu, tambahkan "+"
+  return "+" + phone;
 }
 
 export function validatePassword(password: string): string[] {

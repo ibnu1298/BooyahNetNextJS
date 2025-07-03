@@ -28,7 +28,7 @@ export default function GreetingCard() {
     <div className="bg-pink-500 rounded-2xl p-6 flex justify-between items-center text-white">
       <div>
         <h2 className="text-2xl font-bold">
-          Hello {capitalizeName(user.name)}!
+          Hello {capitalizeName(user?.name ?? "")}!
         </h2>
         <p className="mt-1 text-sm">
           Selamat datang di aplikasi pencatatan pembayaran{" "}

@@ -22,7 +22,7 @@ export default function StatCards() {
       setData(result);
       setLoading(false);
     });
-  }, [session, data]);
+  }, [session]);
 
   const totalBelumLunas =
     data == undefined

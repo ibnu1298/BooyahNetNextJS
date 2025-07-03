@@ -12,9 +12,9 @@ export default function RegisterForm() {
   const [verifyWANumber, setVerifyWANumber] = useState(false);
   const [email, setEmail] = useState("");
   const [showGetOTP, setShowGetOTP] = useState(false);
+  const [cooldown, setCooldown] = useState(30);
   const [waNumber, setWaNumber] = useState("");
   const [prefix, setPrefix] = useState("62");
-  const [cooldown, setCooldown] = useState(30);
   const [otp, setOtp] = useState("");
   const [password, setPassword] = useState("");
   const [notif, setNotif] = useState({

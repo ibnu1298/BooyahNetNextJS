@@ -3,6 +3,7 @@
 export type RawPembayaran = {
   payment_id: string;
   paid_at: string;
+  billing_date_for: string;
   amount: string;
   is_paid: boolean;
 };
@@ -30,6 +31,7 @@ export async function getPaymentByUserId(userId: string, token: string) {
     return json.data?.map((item: RawPembayaran) => ({
       payment_id: item.payment_id,
       tanggal: item.paid_at,
+      billing_date_for: item.billing_date_for,
       nominal: parseInt(item.amount),
       status: item.is_paid,
     }));
