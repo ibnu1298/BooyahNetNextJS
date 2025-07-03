@@ -11,6 +11,7 @@ export default withAuth(
     const { pathname } = req.nextUrl;
     const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
     console.log("token?.refreshToken:" + token?.refreshToken);
+    console.log("token middleware");
 
     if (token?.refreshToken) {
       const decoded = jwtDecode<decodedToken>(token.refreshToken);
