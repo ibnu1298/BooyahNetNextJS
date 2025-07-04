@@ -13,11 +13,6 @@ const meetings = [
     title: "Client Review",
     description: "Follow-up Project ABC",
   },
-  {
-    time: "16:00 - 17:00",
-    title: "Design Sync",
-    description: "UI/UX Planning",
-  },
 ];
 
 export default function RightPanel() {

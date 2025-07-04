@@ -27,6 +27,12 @@ export function formatTanggal(tanggal: string) {
     year: "numeric",
   }).format(new Date(tanggal));
 }
+export function formatTanggalBulan(tanggal: string) {
+  return new Intl.DateTimeFormat("id-ID", {
+    month: "long",
+    year: "numeric",
+  }).format(new Date(tanggal));
+}
 
 export function nextBillingDate(dateString: string): string {
   const prevDate = new Date(dateString);

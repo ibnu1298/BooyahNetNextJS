@@ -52,10 +52,10 @@ export default function ProfileView() {
                 className="rounded-full border border-white"
               />
             ) : (
-              <CircleUserRound size={64} />
+              <CircleUserRound size={64} className="text-white" />
             )}
             <div>
-              <h3 className="text-xl font-semibold">
+              <h3 className="text-xl font-semibold text-white">
                 {capitalizeName(user?.name ?? "")}
               </h3>
               <p className="text-sm font-thin  text-white/80">
