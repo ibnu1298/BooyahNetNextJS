@@ -52,7 +52,7 @@ export default function Sidebar() {
               <button
                 key={i}
                 onClick={() => setView(item.view)}
-                className={`w-10 h-10 flex items-center justify-center rounded-lg transition-all ${
+                className={`w-10 mx-2 h-10 flex items-center justify-center rounded-lg transition-all ${
                   currentView === item.view
                     ? "bg-purple-500 text-white"
                     : "bg-gray-700 text-gray-400 hover:bg-gray-600"

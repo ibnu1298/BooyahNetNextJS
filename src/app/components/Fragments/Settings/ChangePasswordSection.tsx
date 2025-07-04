@@ -15,8 +15,8 @@ export default function ChangePasswordSection() {
         onClick={() => setIsOpen(!isOpen)}
       >
         <div className="flex gap-2 items-center">
-          <KeyRound size={23} />
-          <h3 className="text-lg font-semibold">Ganti Password</h3>
+          <KeyRound size={23} className="text-white" />
+          <h3 className="text-lg font-semibold text-white">Ganti Password</h3>
         </div>
         {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
       </div>

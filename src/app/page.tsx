@@ -1,7 +1,6 @@
 import MainDashboard from "./components/Fragments/Dashboard/MainDashboard";
 import { DashboardProvider } from "./context/DashboardContext";
 import Sidebar from "./components/Fragments/Dashboard/Sidebar";
-import RightPanel from "./components/Fragments/Dashboard/RightPanel";
 
 export default async function DashboardPage() {
   return (
@@ -10,7 +9,7 @@ export default async function DashboardPage() {
         <Sidebar />
         <main className="flex-1 flex">
           <MainDashboard />
-          <RightPanel />
+          {/* <RightPanel /> */}
         </main>
       </div>
     </DashboardProvider>
