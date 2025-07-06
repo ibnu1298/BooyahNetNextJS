@@ -9,6 +9,7 @@ import { capitalizeName } from "@/utils/commonFunctions";
 import Button from "../../Elements/Button";
 import { useSession } from "next-auth/react";
 import NotificationModal from "./NotificationModal";
+import Select from "../../Elements/Select";
 
 type Props = {
   show: boolean;
@@ -55,7 +56,7 @@ export default function EditUserModal({ show, user, onClose, onSave }: Props) {
 
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL_API}/api/users/update-billing-date`,
+        `${process.env.NEXT_PUBLIC_BASE_URL_API}/api/users/update-by-admin`,
         {
           method: "PUT",
           headers: {
@@ -65,6 +66,7 @@ export default function EditUserModal({ show, user, onClose, onSave }: Props) {
           body: JSON.stringify({
             user_id: edited.user_id,
             billing_date: edited.billing_date,
+            is_subscribe: edited.is_subscribe,
           }),
         }
       );
@@ -74,7 +76,7 @@ export default function EditUserModal({ show, user, onClose, onSave }: Props) {
       if (data.success) {
         setNotif({
           show: true,
-          message: "Berhasil update billing date!",
+          message: data.message,
           type: "success",
         });
         setTimeout(() => {
@@ -92,6 +94,13 @@ export default function EditUserModal({ show, user, onClose, onSave }: Props) {
           message: "Gagal update: " + data.message,
           type: "error",
         });
+        setTimeout(() => {
+          setNotif({
+            show: false,
+            message: "",
+            type: "success" as "success" | "error",
+          });
+        }, 1500);
       }
     } catch (error) {
       console.error("Error update billing date:", error);
@@ -126,14 +135,6 @@ export default function EditUserModal({ show, user, onClose, onSave }: Props) {
         <hr />
         <br />
         <div className="space-y-4">
-          <Input
-            label="Role"
-            value={edited.role_name ?? ""}
-            onChange={(e: any) =>
-              setEdited({ ...edited, role_name: e.target.value })
-            }
-          />
-          <Button type="submit">Ganti Role</Button>
           <form onSubmit={handleSubmitBillingDate} className="space-y-4">
             <Input
               label="Billing Date"
@@ -153,7 +154,21 @@ export default function EditUserModal({ show, user, onClose, onSave }: Props) {
                 setEdited({ ...edited, billing_date: e.target.value })
               }
             />
-            <Button type="submit">Atur Biling Date</Button>
+            <Select
+              label="Status Langganan"
+              value={edited.is_subscribe?.toString()} // jadi string untuk selected
+              onChange={(e: any) =>
+                setEdited({
+                  ...edited,
+                  is_subscribe: e.target.value === "true",
+                })
+              }
+              options={[
+                { label: "Aktif", value: "true" },
+                { label: "Non-Aktif", value: "false" },
+              ]}
+            />
+            <Button type="submit">Update</Button>
           </form>
           <NotificationModal
             message={notif.message}

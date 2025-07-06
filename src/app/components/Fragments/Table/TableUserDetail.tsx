@@ -61,9 +61,7 @@ export default function TableUserDetail() {
   );
   return (
     <div className="max-w-80 md:max-w-2xl mx-auto bg-gray-800 p-6 rounded-2xl shadow-lg">
-      <h2 className="text-xl font-semibold mb-4 text-white">
-        User Detail Table
-      </h2>
+      <h2 className="text-xl font-semibold mb-4 text-white">User Detail</h2>
       {loading ? (
         <div className="text-white">Loading...</div>
       ) : (
@@ -78,6 +76,7 @@ export default function TableUserDetail() {
                 <th className="px-4 py-2">No. WA</th>
                 <th className="px-4 py-2">Alamat</th>
                 <th className="px-4 py-2">Billing Date</th>
+                <th className="px-4 py-2">Pelanggan</th>
                 <th className="px-4 py-2">Role</th>
               </tr>
             </thead>
@@ -131,6 +130,13 @@ export default function TableUserDetail() {
                   </td>
                   <td className="px-4 py-2 truncate ">
                     {user.billing_date ? formatTanggal(user.billing_date) : "-"}
+                  </td>
+                  <td
+                    className={`px-4 py-2 ${
+                      user.is_subscribe ? "bg-green-600" : "bg-red-700/50"
+                    }`}
+                  >
+                    {user.is_subscribe ? "Aktif" : "Non-Aktif"}
                   </td>
                   <td className="px-4 py-2">{user.role_name}</td>
                 </tr>
