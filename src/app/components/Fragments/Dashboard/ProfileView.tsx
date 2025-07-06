@@ -13,11 +13,8 @@ import { UserDetail } from "@/types/UserDetail";
 import { useEffect, useState } from "react";
 import { signOut, useSession } from "next-auth/react";
 import { getUserDetail } from "@/utils/Fetch/getUserDetail";
-import { capitalizeName, formatPhone } from "@/utils/commonFunctions";
+import { capitalizeName } from "@/utils/commonFunctions";
 import ChangePasswordSection from "../Settings/ChangePasswordSection";
-import Button from "../../Elements/Button";
-import Input from "../../Elements/Input";
-import NotificationModal from "../Modal/NotificationModal";
 import ProfileUser from "./ProfileUser";
 
 export default function ProfileView() {
