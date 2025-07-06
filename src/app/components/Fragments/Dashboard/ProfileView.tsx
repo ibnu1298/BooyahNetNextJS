@@ -13,11 +13,8 @@ import { UserDetail } from "@/types/UserDetail";
 import { useEffect, useState } from "react";
 import { signOut, useSession } from "next-auth/react";
 import { getUserDetail } from "@/utils/Fetch/getUserDetail";
-import { capitalizeName, formatPhone } from "@/utils/commonFunctions";
+import { capitalizeName } from "@/utils/commonFunctions";
 import ChangePasswordSection from "../Settings/ChangePasswordSection";
-import Button from "../../Elements/Button";
-import Input from "../../Elements/Input";
-import NotificationModal from "../Modal/NotificationModal";
 import ProfileUser from "./ProfileUser";
 
 export default function ProfileView() {
@@ -52,10 +49,10 @@ export default function ProfileView() {
                 className="rounded-full border border-white"
               />
             ) : (
-              <CircleUserRound size={64} />
+              <CircleUserRound size={64} className="text-white" />
             )}
             <div>
-              <h3 className="text-xl font-semibold">
+              <h3 className="text-xl font-semibold text-white">
                 {capitalizeName(user?.name ?? "")}
               </h3>
               <p className="text-sm font-thin  text-white/80">

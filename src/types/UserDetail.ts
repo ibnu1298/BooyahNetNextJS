@@ -9,6 +9,7 @@ export type UserDetail = {
   address: string | null;
   role_name: string | null;
   billing_date: string | null;
+  is_subscribe: boolean;
 };
 
 export type ListUser = {

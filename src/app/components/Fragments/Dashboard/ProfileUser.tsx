@@ -204,7 +204,7 @@ export default function ProfileUser({
   };
   return (
     <div className="max-w-3xl mx-auto bg-gray-800/90 p-6 rounded-2xl shadow-lg">
-      <h3 className="text-lg font-semibold mb-2">Profil Pengguna</h3>
+      <h3 className="text-lg font-semibold mb-2 text-white">Profil Pengguna</h3>
       <div className=" lg:flex items-start justify-between grid gap-6">
         <div
           className={`grid grid-cols-1 ${
@@ -212,7 +212,7 @@ export default function ProfileUser({
           } gap-3`}
         >
           <div id="name">
-            <div className="text-sm text-white/30 font-extralight">
+            <div className="text-sm text-white/70 font-extralight">
               Nama Lengkap
             </div>
             {editMode ? (
@@ -230,7 +230,7 @@ export default function ProfileUser({
           </div>
 
           <div id="email">
-            <div className="text-sm text-white/30 font-extralight">Email</div>
+            <div className="text-sm text-white/70 font-extralight">Email</div>
             {editMode ? (
               <Input
                 value={editedUser.email}
@@ -246,7 +246,7 @@ export default function ProfileUser({
           </div>
 
           <div id="phone">
-            <div className="text-sm text-white/30 font-extralight">
+            <div className="text-sm text-white/70 font-extralight">
               Nomor Telepon
             </div>
             {editMode ? (
@@ -337,7 +337,7 @@ export default function ProfileUser({
           </div>
 
           <div id="alamat">
-            <div className="text-sm text-white/30 font-extralight">Alamat</div>
+            <div className="text-sm text-white/70 font-extralight">Alamat</div>
             {editMode ? (
               <Input
                 value={editedUser.address}
@@ -367,7 +367,7 @@ export default function ProfileUser({
           </div>
         ) : (
           <button
-            className="rounded-full w-fit items-center justify-center px-4 py-2 flex gap-2 bg-cyan-600 hover:bg-cyan-700"
+            className="rounded-full w-fit items-center justify-center px-4 py-2 flex gap-2 text-white bg-cyan-600 hover:bg-cyan-700"
             onClick={() => setEditMode(true)}
           >
             <Pencil size={18} /> Edit
