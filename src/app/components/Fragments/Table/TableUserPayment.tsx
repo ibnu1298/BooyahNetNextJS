@@ -43,7 +43,7 @@ export default function TabelUserPayment({
   }, [data, user_id, onSelectUser]);
 
   return (
-    <div className="overflow-x-auto bg-gray-900/60 backdrop-blur rounded-xl p-6 border border-gray-700">
+    <div className="max-w-4xl  overflow-x-auto bg-gray-900/60 backdrop-blur rounded-xl p-6 border border-gray-700">
       <h2 className="text-lg font-semibold text-white mb-4">
         Daftar Pengguna & Riwayat Pembayaran
       </h2>

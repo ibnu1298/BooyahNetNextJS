@@ -180,7 +180,7 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
     return `Kwitansi_BooyahNet_${paymentFor.replace(" ", "_")}`;
   }
   return (
-    <div className="max-w-80 md:max-w-2xl mx-auto bg-gray-800 p-6 rounded-2xl shadow-lg">
+    <div className="max-w-80 md:max-w-full mx-auto bg-gray-800 p-6 rounded-2xl shadow-lg">
       <div className="flex justify-between mb-3">
         <h2 className="text-xl font-semibold mb-4 text-gray-100">
           Data Pembayaran
@@ -199,7 +199,7 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
           <thead className="sticky text-left top-0 bg-gray-900 z-10">
             <tr className="text-gray-100 border-y border-gray-700">
               <th className="py-2 px-2 w-6">No</th>
-              <th className="p-2">Tanggal </th>
+              <th className="p-2">Tanggal</th>
               <th className="p-2">Tagihan Bulan </th>
               <th className="py-2">Nominal</th>
               <th className="py-2">Status</th>
@@ -221,9 +221,7 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
                   <td className="py-2 px-2 w-6 break-words">{index + 1}</td>
 
                   <td className="p-2 whitespace-nowrap">
-                    {formatTanggal(
-                      item.status ? item.tanggal : item.billing_date_for
-                    )}
+                    {item.status ? formatTanggal(item.tanggal) : "-"}
                   </td>
                   <td className="p-2 whitespace-nowrap">
                     {formatTanggalBulan(item.billing_date_for)}
