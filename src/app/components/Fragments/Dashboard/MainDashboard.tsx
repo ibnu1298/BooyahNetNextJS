@@ -57,7 +57,7 @@ export default function MainDashboard() {
     switch (activeTab) {
       case "payment":
         return (
-          <>
+          <div className="space-y-8 flex flex-col justify-center items-center">
             <TabelUserPayment
               data={data}
               onSelectUser={setUserId}
@@ -73,7 +73,7 @@ export default function MainDashboard() {
                 });
               }}
             />
-          </>
+          </div>
         );
       case "settings":
         return (
@@ -90,7 +90,7 @@ export default function MainDashboard() {
 
   const { currentView } = dashboard;
   return (
-    <section className="max-w-3xl mx-auto flex-1 p-6 overflow-y-auto space-y-6">
+    <section className="max-w-full mx-auto flex-1 p-6 overflow-y-auto space-y-6">
       {currentView === "dashboard" && (
         <>
           <GreetingCard />
@@ -104,7 +104,7 @@ export default function MainDashboard() {
       {currentView === "admin" && (
         <>
           <div className="min-h-[100px] transition-all duration-300 grid gap-6">
-            <GreetingCard />
+            {/* <GreetingCard /> */}
             <div className="flex justify-center gap-2 text-sm">
               {tabs.map((tab) => (
                 <button
