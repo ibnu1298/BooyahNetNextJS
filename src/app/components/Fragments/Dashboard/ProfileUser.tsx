@@ -354,7 +354,7 @@ export default function ProfileUser({
         </div>
 
         {editMode ? (
-          <div className="flex gap-2">
+          <div className="flex gap-3 font-bold">
             <Button onClick={handleSave} disabled={loading || !verifyWANumber}>
               {loading ? "Menyimpan..." : "Simpan"}
             </Button>
@@ -367,10 +367,10 @@ export default function ProfileUser({
           </div>
         ) : (
           <button
-            className="rounded-full w-fit items-center justify-center px-4 py-2 flex gap-2 text-white bg-cyan-600 hover:bg-cyan-700"
+            className="rounded-full font-bold w-fit items-center justify-center px-4 py-2 flex gap-2 text-white bg-cyan-600 hover:bg-cyan-700"
             onClick={() => setEditMode(true)}
           >
-            <Pencil size={18} /> Edit
+            <Pencil size={18} strokeWidth={2.5} /> Edit
           </button>
         )}
       </div>

@@ -23,7 +23,7 @@ export function getAgeFromDate(dateString: string): number {
 export function formatTanggal(tanggal: string) {
   return new Intl.DateTimeFormat("id-ID", {
     day: "2-digit",
-    month: "short",
+    month: "long",
     year: "numeric",
   }).format(new Date(tanggal));
 }

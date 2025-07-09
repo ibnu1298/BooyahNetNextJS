@@ -13,6 +13,7 @@ import { jwtDecode } from "jwt-decode";
 import { decodedToken } from "@/app/interface/decodedToken";
 import { getUsers } from "@/utils/Fetch/getUsers";
 import TableUserDetail from "../Table/TableUserDetail";
+import SalesChart from "./SalesChart";
 // import SettingsView from './SettingsView'; (nanti)
 const tabs = [
   { key: "payment", label: "Payments" },
@@ -90,8 +91,8 @@ export default function MainDashboard() {
 
   const { currentView } = dashboard;
   return (
-    <section className="max-w-full mx-auto flex-1 p-6 overflow-y-auto space-y-6">
-      {currentView === "dashboard" && (
+    <section className="max-w-4xl mx-auto flex-1 p-6 overflow-y-auto space-y-6">
+      {currentView === "dashboard" && session?.user?.role != "Admin" && (
         <>
           <GreetingCard />
           <StatCards />
@@ -99,6 +100,12 @@ export default function MainDashboard() {
             token={session?.user?.token!}
             user_id={session?.user?.user_id!}
           />
+        </>
+      )}
+      {currentView === "dashboard" && session?.user?.role == "Admin" && (
+        <>
+          <GreetingCard />
+          <SalesChart />
         </>
       )}
       {currentView === "admin" && (
