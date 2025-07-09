@@ -5,6 +5,7 @@ import {
   formatTanggal,
   nextBillingDate,
   formatTanggalBulan,
+  capitalizeName,
 } from "@/utils/commonFunctions";
 import { getPaymentByUserId } from "@/utils/Fetch/getPaymentByUserId";
 import { getUserDetail } from "@/utils/Fetch/getUserDetail";
@@ -181,12 +182,19 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
   }
   return (
     <div className="max-w-80 md:max-w-full mx-auto bg-gray-800 p-6 rounded-2xl shadow-lg">
-      <div className="flex justify-between mb-3">
-        <h2 className="text-xl font-semibold mb-4 text-gray-100">
+      <div className="md:flex justify-between mb-3">
+        <h2 className="text-xl font-semibold mb-4 text-gray-100 md:flex gap-1">
           Data Pembayaran
+          <div className="text-green-500">
+            {session?.user?.role == "Admin" ? (
+              capitalizeName(user?.name ?? "")
+            ) : (
+              <></>
+            )}
+          </div>
         </h2>
 
-        <div className="text-white">
+        <div className="text-white ">
           <div className="text-xs">Tagihan Selanjutnya</div>
           <div className="font-bold">
             {nextBillingDate(user?.billing_date!)}
