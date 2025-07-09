@@ -8,6 +8,7 @@ import {
   KeyRound,
   LogOut,
   Pencil,
+  Undo2,
 } from "lucide-react";
 import { UserDetail } from "@/types/UserDetail";
 import { useEffect, useState } from "react";
@@ -16,9 +17,11 @@ import { getUserDetail } from "@/utils/Fetch/getUserDetail";
 import { capitalizeName } from "@/utils/commonFunctions";
 import ChangePasswordSection from "../Settings/ChangePasswordSection";
 import ProfileUser from "./ProfileUser";
+import { div } from "framer-motion/client";
 
 export default function ProfileView() {
   const [user, setUser] = useState<UserDetail | null>(null);
+  const [wannaLogout, setWannaLogout] = useState(false);
   const { data: session } = useSession();
 
   useEffect(() => {
@@ -68,14 +71,36 @@ export default function ProfileView() {
       {/* Section 3: Tambahan Konten */}
       <ChangePasswordSection />
 
-      <div className="max-w-3xl mx-auto">
-        <button
-          onClick={handleLogout}
-          className="w-full mb-15 bg-red-600 rounded-2xl shadow-lg flex items-center justify-center gap-2 
-               font-semibold px-6 py-3 hover:bg-red-800 active:bg-red-900 transition text-white cursor-pointer"
-        >
-          <LogOut size={20} strokeWidth={3} /> Logout
-        </button>
+      <div className="max-w-3xl mx-auto mb-15 bg-gray-800/90 p-7 rounded-3xl">
+        {wannaLogout ? (
+          <div className="grid space-y-3 text-center">
+            <div className="font-bold text-xl ">Logout</div>
+            <div className="grid space-y-0  md:flex gap-5">
+              <button
+                onClick={() => setWannaLogout(false)}
+                className="w-full bg-cyan-500 rounded-2xl shadow-lg flex items-center justify-center gap-2 
+              font-semibold px-6 py-3 hover:bg-cyan-700 active:bg-cyan-700 transition text-white cursor-pointer"
+              >
+                <Undo2 size={20} strokeWidth={3} /> Tidak
+              </button>
+              <button
+                onClick={handleLogout}
+                className="md:w-3xs bg-red-600 rounded-2xl shadow-lg flex items-center justify-center gap-2 
+              font-semibold px-6 py-3 hover:bg-red-800 active:bg-red-900 transition text-white cursor-pointer"
+              >
+                <LogOut size={20} strokeWidth={3} /> Ya
+              </button>
+            </div>
+          </div>
+        ) : (
+          <button
+            onClick={() => setWannaLogout(true)}
+            className="w-full  bg-red-600 rounded-2xl shadow-lg flex items-center justify-center gap-2 
+          font-semibold px-6 py-3 hover:bg-red-800 active:bg-red-900 transition text-white cursor-pointer"
+          >
+            <LogOut size={20} strokeWidth={3} /> Logout
+          </button>
+        )}
       </div>
     </div>
   );

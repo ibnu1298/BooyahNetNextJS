@@ -11,7 +11,7 @@ import {
 } from "recharts";
 
 const data = [
-  { date: "Jun 1", value: 2400 },
+  { date: "Juni 1", value: 2400 },
   { date: "Jun 2", value: 1398 },
   { date: "Jun 3", value: 9800 },
   { date: "Jun 4", value: 3908 },

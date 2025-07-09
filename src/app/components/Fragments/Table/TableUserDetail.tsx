@@ -60,7 +60,7 @@ export default function TableUserDetail() {
     users.map((u) => u.user_id)
   );
   return (
-    <div className="max-w-80 md:max-w-full mx-auto bg-gray-800 p-6 rounded-2xl shadow-lg">
+    <div className="max-w-80 md:max-w-3xl mx-auto bg-gray-800 p-6 rounded-2xl shadow-lg">
       <h2 className="text-xl font-semibold mb-4 text-white">User Detail</h2>
       {loading ? (
         <div className="text-white">Loading...</div>
