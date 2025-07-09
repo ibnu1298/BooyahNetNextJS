@@ -47,10 +47,6 @@ export default function Sidebar() {
             if (item.view === "admin" && role !== "Admin") {
               return null; // Sembunyikan tombol admin untuk non-admin
             }
-            if (item.view === "dashboard" && role === "Admin") {
-              return null;
-            }
-
             return (
               <button
                 key={i}

@@ -204,9 +204,7 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
               <th className="py-2">Nominal</th>
               <th className="py-2">Status</th>
 
-              {session?.user?.role === "Admin" && (
-                <th className="py-2 text-center">Aksi</th>
-              )}
+              <th className="py-2 text-center"></th>
             </tr>
           </thead>
           <tbody>

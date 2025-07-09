@@ -11,6 +11,7 @@ import { Session } from "node:inspector/promises";
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setIsLoading] = useState(false);
   const router = useRouter();
   const [notif, setNotif] = useState({
     show: false,
@@ -20,7 +21,7 @@ export default function LoginForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    setIsLoading(true);
     const res = await signIn("credentials", {
       redirect: false,
       email,
@@ -33,6 +34,7 @@ export default function LoginForm() {
         message: "Email atau password salah",
         type: "error",
       });
+      setIsLoading(false);
     } else {
       setNotif({
         show: true,
@@ -41,6 +43,7 @@ export default function LoginForm() {
       });
 
       setTimeout(async () => {
+        setIsLoading(false);
         router.push("/");
       }, 1500);
     }
@@ -74,7 +77,11 @@ export default function LoginForm() {
             Forgot password?
           </a>
         </div> */}
-        <Button type="submit">Login</Button>
+        {
+          <Button type="submit" disabled={loading}>
+            {loading ? <>Loading...</> : <>Login</>}
+          </Button>
+        }
       </form>
       <NotificationModal
         message={notif.message}
