@@ -74,7 +74,7 @@ export default function ProfileView() {
       <div className="max-w-3xl mx-auto mb-15 bg-gray-800/90 p-7 rounded-3xl">
         {wannaLogout ? (
           <div className="grid space-y-3 text-center">
-            <div className="font-bold text-xl ">Logout</div>
+            <div className="font-bold text-xl text-white">Logout</div>
             <div className="grid space-y-0  md:flex gap-5">
               <button
                 onClick={() => setWannaLogout(false)}

@@ -18,7 +18,11 @@ export default function ChangePasswordSection() {
           <KeyRound size={23} className="text-white" />
           <h3 className="text-lg font-semibold text-white">Ganti Password</h3>
         </div>
-        {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+        {isOpen ? (
+          <ChevronUp size={20} className="text-white" strokeWidth={3} />
+        ) : (
+          <ChevronDown size={20} className="text-white" strokeWidth={3} />
+        )}
       </div>
 
       <AnimatePresence initial={false}>
