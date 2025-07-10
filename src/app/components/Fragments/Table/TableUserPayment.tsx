@@ -2,7 +2,7 @@
 
 import { ListUser } from "@/types/UserDetail";
 import { useSession } from "next-auth/react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 type Props = {
   data: ListUser[];
@@ -33,8 +33,33 @@ export default function TabelUserPayment({
     unpaid: 0,
   });
   const { data: session } = useSession();
-  console.log("TabelUserPayment :" + session?.user?.refreshToken);
+  const [sortBy, setSortBy] = useState<keyof ListUser>("name");
+  const [sortDirection, setSortDirection] = useState("asc");
 
+  const handleSort = (field: any) => {
+    if (sortBy === field) {
+      setSortDirection((prev) => (prev === "asc" ? "desc" : "asc"));
+    } else {
+      setSortBy(field);
+      setSortDirection("asc");
+    }
+  };
+
+  const sortedData = useMemo(() => {
+    if (!data) return [];
+    const sorted = [...data].sort((a, b) => {
+      const valA = a[sortBy] ?? "";
+      const valB = b[sortBy] ?? "";
+
+      if (typeof valA === "number" && typeof valB === "number") {
+        return sortDirection === "asc" ? valA - valB : valB - valA;
+      }
+      return sortDirection === "asc"
+        ? String(valA).localeCompare(String(valB))
+        : String(valB).localeCompare(String(valA));
+    });
+    return sorted;
+  }, [data, sortBy, sortDirection]);
   useEffect(() => {
     setPayments(getSummary(data));
     if (!user_id && data?.length > 0) {
@@ -48,21 +73,66 @@ export default function TabelUserPayment({
         Daftar Pengguna & Riwayat Pembayaran
       </h2>
       <div className="w-full overflow-x-auto px-2 max-h-[300px] overflow-y-auto ">
-        <table className=" w-full table-fixed text-left text-sm text-gray-100">
+        <table className="w-full table-fixed text-left text-sm text-gray-100">
           <thead className="sticky -top-0.5 bg-gray-900 z-20">
-            <tr className="text-gray-100 border-b border-gray-700 ">
-              <th className="px-2 py-2">No</th>
-              <th className="px-2 py-2">Nama</th>
-              <th className="px-2 py-2 hidden md:table-cell">Email</th>
-              <th className="px-2 py-2 hidden md:table-cell">Role</th>
-              <th className="px-2 py-2">Belum Lunas</th>
-              <th className="px-2 py-2">Lunas</th>
-              <th className="px-2 py-2">Total</th>
+            <tr className="text-gray-100 border-b border-gray-700">
+              <th
+                onClick={() => handleSort("no")}
+                className="px-2 py-2 cursor-pointer"
+              >
+                No
+              </th>
+              <th
+                onClick={() => handleSort("name")}
+                className="px-2 py-2 cursor-pointer"
+              >
+                Nama{" "}
+                {sortBy === "name" && (sortDirection === "asc" ? "▲" : "▼")}
+              </th>
+              <th
+                onClick={() => handleSort("email")}
+                className="px-2 py-2 hidden md:table-cell cursor-pointer"
+              >
+                Email{" "}
+                {sortBy === "email" && (sortDirection === "asc" ? "▲" : "▼")}
+              </th>
+              <th
+                onClick={() => handleSort("role_name")}
+                className="px-2 py-2 hidden md:table-cell cursor-pointer"
+              >
+                Role{" "}
+                {sortBy === "role_name" &&
+                  (sortDirection === "asc" ? "▲" : "▼")}
+              </th>
+              <th
+                onClick={() => handleSort("unpaid_payments")}
+                className="px-2 py-2 cursor-pointer"
+              >
+                Belum Lunas{" "}
+                {sortBy === "unpaid_payments" &&
+                  (sortDirection === "asc" ? "▲" : "▼")}
+              </th>
+              <th
+                onClick={() => handleSort("paid_payments")}
+                className="px-2 py-2 cursor-pointer"
+              >
+                Lunas{" "}
+                {sortBy === "paid_payments" &&
+                  (sortDirection === "asc" ? "▲" : "▼")}
+              </th>
+              <th
+                onClick={() => handleSort("total_payments")}
+                className="px-2 py-2 cursor-pointer"
+              >
+                Total{" "}
+                {sortBy === "total_payments" &&
+                  (sortDirection === "asc" ? "▲" : "▼")}
+              </th>
             </tr>
           </thead>
           <tbody>
-            {data?.length > 0 ? (
-              data.map((user, index) => (
+            {sortedData?.length > 0 ? (
+              sortedData.map((user, index) => (
                 <tr
                   key={user.id}
                   onClick={() => onSelectUser(user.id)}
@@ -100,12 +170,9 @@ export default function TabelUserPayment({
               </tr>
             )}
             <tr className="border-t border-gray-800 text-md font-extrabold bg-gray-700 sticky z-20 -bottom-0.5">
-              {/* Mobile: colSpan 2 */}
               <td colSpan={2} className="px-4 py-2 md:hidden">
                 Total
               </td>
-
-              {/* Desktop: colSpan 4 */}
               <td colSpan={4} className="px-4 py-2 hidden md:table-cell">
                 Total
               </td>
