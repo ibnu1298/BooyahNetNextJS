@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { BadgeCheck, BadgeX, Pencil, SquarePen } from "lucide-react";
 import Button from "../../Elements/Button";
@@ -16,7 +16,41 @@ export default function TableUserDetail() {
   const [copied, setCopied] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState<UserDetail | null>(null);
+  const [sortBy, setSortBy] = useState<keyof UserDetail>("name");
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
 
+  const handleSort = (field: keyof UserDetail) => {
+    if (sortBy === field) {
+      setSortDirection((prev) => (prev === "asc" ? "desc" : "asc"));
+    } else {
+      setSortBy(field);
+      setSortDirection("asc");
+    }
+  };
+
+  const sortedUsers = useMemo(() => {
+    if (!users) return [];
+    return [...users].sort((a, b) => {
+      let valA = a[sortBy];
+      let valB = b[sortBy];
+
+      if (
+        sortBy === "is_subscribe" ||
+        sortBy === "verify_email" ||
+        sortBy === "verify_phone"
+      ) {
+        valA = a[sortBy] ? true : false;
+        valB = b[sortBy] ? true : false;
+      }
+
+      if (typeof valA === "number" && typeof valB === "number") {
+        return sortDirection === "asc" ? valA - valB : valB - valA;
+      }
+      return sortDirection === "asc"
+        ? String(valA ?? "").localeCompare(String(valB ?? ""))
+        : String(valB ?? "").localeCompare(String(valA ?? ""));
+    });
+  }, [users, sortBy, sortDirection]);
   const handleCopy = (data: string) => {
     if (!data) return;
     navigator.clipboard.writeText(data);
@@ -69,82 +103,127 @@ export default function TableUserDetail() {
           <table className="min-w-full text-sm text-white border border-gray-700">
             <thead className="bg-gray-700 text-left sticky -top-0.5 z-30">
               <tr>
-                <th className="px-4 py-2 sticky -left-0.5 bg-gray-700 z-20">
-                  Nama
+                <th
+                  onClick={() => handleSort("name")}
+                  className="px-4 py-2 sticky -left-0.5 bg-gray-700 z-20 cursor-pointer"
+                >
+                  Nama{" "}
+                  {sortBy === "name" && (sortDirection === "asc" ? "▲" : "▼")}
                 </th>
-                <th className="px-4 py-2">Email</th>
-                <th className="px-4 py-2">No. WA</th>
-                <th className="px-4 py-2">Alamat</th>
-                <th className="px-4 py-2">Billing Date</th>
-                <th className="px-4 py-2">Pelanggan</th>
-                <th className="px-4 py-2">Role</th>
+                <th
+                  onClick={() => handleSort("email")}
+                  className="px-4 py-2 cursor-pointer"
+                >
+                  Email{" "}
+                  {sortBy === "email" && (sortDirection === "asc" ? "▲" : "▼")}
+                </th>
+                <th
+                  onClick={() => handleSort("phone")}
+                  className="px-4 py-2 cursor-pointer"
+                >
+                  No. WA{" "}
+                  {sortBy === "phone" && (sortDirection === "asc" ? "▲" : "▼")}
+                </th>
+                <th
+                  onClick={() => handleSort("address")}
+                  className="px-4 py-2 cursor-pointer"
+                >
+                  Alamat{" "}
+                  {sortBy === "address" &&
+                    (sortDirection === "asc" ? "▲" : "▼")}
+                </th>
+                <th
+                  onClick={() => handleSort("billing_date")}
+                  className="px-4 py-2 cursor-pointer"
+                >
+                  Billing Date{" "}
+                  {sortBy === "billing_date" &&
+                    (sortDirection === "asc" ? "▲" : "▼")}
+                </th>
+                <th
+                  onClick={() => handleSort("is_subscribe")}
+                  className="px-4 py-2 cursor-pointer"
+                >
+                  Pelanggan{" "}
+                  {sortBy === "is_subscribe" &&
+                    (sortDirection === "asc" ? "▲" : "▼")}
+                </th>
+                <th
+                  onClick={() => handleSort("role_name")}
+                  className="px-4 py-2 cursor-pointer"
+                >
+                  Role{" "}
+                  {sortBy === "role_name" &&
+                    (sortDirection === "asc" ? "▲" : "▼")}
+                </th>
               </tr>
             </thead>
             <tbody>
-              {users.map((user) => (
-                <tr
-                  key={user.user_id}
-                  className="border-t border-gray-700 hover:bg-gray-700/50"
-                >
-                  <td className="px-4 py-2 truncate max-w-32 sticky -left-0.5 bg-gray-800 z-10 ">
-                    <button
-                      onClick={() => {
-                        setSelectedUser(user);
-                        setShowModal(true);
-                      }}
-                      className="p-3 flex items-center gap-3 cursor-pointer"
-                      title={`Edit Data ${user.name}`}
+              {sortedUsers.length > 0 ? (
+                sortedUsers.map((user) => (
+                  <tr
+                    key={user.user_id}
+                    className="border-t border-gray-700 hover:bg-gray-700/50"
+                  >
+                    <td className="px-4 py-2 truncate max-w-32 sticky -left-0.5 bg-gray-800 z-10">
+                      <button
+                        onClick={() => {
+                          setSelectedUser(user);
+                          setShowModal(true);
+                        }}
+                        className="p-3 flex items-center gap-3 cursor-pointer"
+                        title={`Edit Data ${user.name}`}
+                      >
+                        <SquarePen size={16} className="text-white" />
+                        {user.name}
+                      </button>
+                    </td>
+                    <td className="px-4 py-2 truncate">
+                      <div className="flex gap-2">
+                        {user.email}
+                        {user.verify_email ? (
+                          <BadgeCheck className="text-green-400" size={18} />
+                        ) : (
+                          <BadgeX className="text-gray-400" size={18} />
+                        )}
+                      </div>
+                    </td>
+                    <td className="px-4 py-2">
+                      <div className="flex gap-2">
+                        {formatPhone(user?.phone ?? "-")}
+                        {user.verify_phone ? (
+                          <BadgeCheck className="text-green-400" size={18} />
+                        ) : (
+                          <BadgeX className="text-gray-400" size={18} />
+                        )}
+                      </div>
+                    </td>
+                    <td
+                      className="px-4 py-2 truncate max-w-32 cursor-pointer"
+                      title={user.address ?? "-"}
+                      onClick={() => handleCopy(user.address ?? "-")}
                     >
-                      <SquarePen size={16} className="text-white" />
-                      {user.name}
-                    </button>
-                  </td>
-                  <td className="px-4 py-2 truncate ">
-                    <div className=" flex gap-2">
-                      {user.email}
-                      {user.verify_email ? (
-                        <BadgeCheck className="text-green-400" size={18} />
-                      ) : (
-                        <BadgeX className="text-gray-400" size={18} />
-                      )}
-                    </div>
-                  </td>
-
-                  <td className="px-4 py-2">
-                    <div className=" flex gap-2">
-                      {formatPhone(user?.phone ?? "-")}
-                      {user.verify_phone ? (
-                        <BadgeCheck className="text-green-400" size={18} />
-                      ) : (
-                        <BadgeX className="text-gray-400" size={18} />
-                      )}
-                    </div>
-                  </td>
-
+                      {user.address ?? "-"}
+                    </td>
+                    <td className="px-4 py-2 truncate">
+                      {user.billing_date
+                        ? formatTanggal(user.billing_date)
+                        : "-"}
+                    </td>
+                    <td
+                      className={`px-4 py-2 ${
+                        user.is_subscribe ? "bg-green-600" : "bg-red-700/50"
+                      }`}
+                    >
+                      {user.is_subscribe ? "Aktif" : "Non-Aktif"}
+                    </td>
+                    <td className="px-4 py-2">{user.role_name}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
                   <td
-                    className="px-4 py-2 truncate max-w-32 cursor-pointer"
-                    title={user.address ?? "-"}
-                    onClick={() => handleCopy(user.address ?? "-")}
-                  >
-                    {user.address ?? "-"}
-                  </td>
-                  <td className="px-4 py-2 truncate ">
-                    {user.billing_date ? formatTanggal(user.billing_date) : "-"}
-                  </td>
-                  <td
-                    className={`px-4 py-2 ${
-                      user.is_subscribe ? "bg-green-600" : "bg-red-700/50"
-                    }`}
-                  >
-                    {user.is_subscribe ? "Aktif" : "Non-Aktif"}
-                  </td>
-                  <td className="px-4 py-2">{user.role_name}</td>
-                </tr>
-              ))}
-              {users.length === 0 && (
-                <tr key="empty">
-                  <td
-                    colSpan={9}
+                    colSpan={7}
                     className="text-center px-4 py-4 text-white/50"
                   >
                     Tidak ada data user.
