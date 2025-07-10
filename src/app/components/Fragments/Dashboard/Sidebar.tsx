@@ -25,7 +25,6 @@ const menu: { icon: React.ReactNode; label: string; view: DashboardView }[] = [
 export default function Sidebar() {
   const dashboard = useDashboard();
   const { data: session } = useSession();
-  console.log("Sidebar");
 
   const [role, setRole] = useState("");
 

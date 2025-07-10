@@ -21,7 +21,6 @@ import NotificationModal from "../Modal/NotificationModal";
 type Props = { token: string; user_id: string; onUpdated?: () => void };
 export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
   const { data: session } = useSession();
-  console.log("TabelPembayaran");
 
   const [data, setData] = useState<Payment[]>([]);
   const [user, setUser] = useState<UserDetail | null>(null);
@@ -40,7 +39,6 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
     message: "",
     type: "success" as "success" | "error",
   });
-  console.log(data);
 
   const openEditModal = (payment: Payment) => {
     setSelectedPayment(payment);
@@ -120,9 +118,6 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
       setCooldown(30);
       setOtpCode("");
     }
-
-    console.log(res.ok);
-    console.log(response);
   };
   useEffect(() => {
     const userId = user_id;
@@ -164,7 +159,7 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [session, user_id, showModal]);
+  }, [user_id, showModal]);
   useEffect(() => {
     if (cooldown > 0) {
       const interval = setInterval(() => {

@@ -23,8 +23,6 @@ const tabs = [
 export default function MainDashboard() {
   const dashboard = useDashboard();
   const { data: session } = useSession();
-  console.log("MainDashboard");
-
   const [data, setData] = useState<ListUser[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
 
@@ -48,7 +46,6 @@ export default function MainDashboard() {
     getUsers(token).then((result) => {
       setData(result);
     });
-    console.log("hit");
   }, [session, userId, dashboard?.currentView]);
   if (!dashboard) {
     return null; // atau tampilkan loading, error, dll
