@@ -288,7 +288,16 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
             ref={modalRef}
             className="relative bg-gray-800 p-6 rounded-xl w-full max-w-md mx-3"
           >
-            <h3 className="text-lg font-semibold mb-4">Edit Pembayaran</h3>{" "}
+            <h3 className="text-lg font-semibold mb-4 flex gap-1">
+              Edit Pembayaran{" "}
+              <div className="text-green-500">
+                {session?.user?.role == "Admin" ? (
+                  capitalizeName(user?.name ?? "")
+                ) : (
+                  <></>
+                )}
+              </div>{" "}
+            </h3>{" "}
             {/* ❌ Tombol close kanan atas */}
             <button
               onClick={() => closeModal()}
