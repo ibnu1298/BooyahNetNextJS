@@ -42,7 +42,11 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
 
   const openEditModal = (payment: Payment) => {
     setSelectedPayment(payment);
-    setEditDate(payment.tanggal?.slice(0, 10) || "");
+    setEditDate(
+      payment.status
+        ? payment.tanggal?.slice(0, 10) || new Date().toISOString().slice(0, 10)
+        : new Date().toISOString().slice(0, 10)
+    );
     setEditStatus(payment.status);
     setShowModal(true);
     setShowGetOTP(true);
