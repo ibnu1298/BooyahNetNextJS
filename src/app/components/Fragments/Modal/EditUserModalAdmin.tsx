@@ -114,9 +114,6 @@ export default function EditUserModal({ show, user, onClose, onSave }: Props) {
   };
 
   if (!show || !edited) return null;
-  console.log("edited");
-  console.log(edited);
-
   return (
     <div className="fixed inset-0 bg-gray-900/50 bg-opacity-40 backdrop-blur-sm z-50 flex items-center justify-center ">
       <div
