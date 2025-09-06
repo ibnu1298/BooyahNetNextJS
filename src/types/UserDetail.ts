@@ -10,6 +10,7 @@ export type UserDetail = {
   role_name: string | null;
   billing_date: string | null;
   is_subscribe: boolean;
+  alias: string | null;
 };
 
 export type ListUser = {
