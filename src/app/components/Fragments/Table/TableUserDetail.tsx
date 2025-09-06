@@ -172,15 +172,15 @@ export default function TableUserDetail() {
                     key={user.user_id}
                     className={`border-t ${
                       user.is_subscribe
-                        ? "bg-green-700 hover:bg-green-700"
-                        : "bg-red-700/50 hover:bg-red-700/50"
+                        ? "bg-green-800 hover:bg-green-900"
+                        : "bg-red-800 hover:bg-red-900"
                     } `}
                   >
                     <td
                       className={`px-4 py-2 truncate max-w-32 sticky -left-0.5 ${
                         user.is_subscribe
-                          ? "hover:bg-green-800"
-                          : "hover:bg-red-900"
+                          ? "bg-green-800 hover:bg-green-900"
+                          : "bg-red-800 hover:bg-red-900"
                       }  z-10`}
                     >
                       <button
