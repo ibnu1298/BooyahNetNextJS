@@ -34,6 +34,7 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
   const [showGetOTP, setShowGetOTP] = useState(false);
   const [cooldown, setCooldown] = useState(30);
   const [editStatus, setEditStatus] = useState(true);
+  const [disableSubmit, setDisableSubmit] = useState(false);
   const [notif, setNotif] = useState({
     show: false,
     message: "",
@@ -54,6 +55,7 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
 
   const handleEditSubmit = async () => {
     if (!selectedPayment) return;
+    setDisableSubmit(true);
     const res = await updatePaidAt(
       {
         paid_at: editDate,
@@ -67,7 +69,7 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
     if (res) {
       setNotif({
         show: true,
-        message: "Registrasi berhasil!",
+        message: "Update berhasil!",
         type: "success",
       });
       setTimeout(() => {
@@ -78,6 +80,7 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
         });
         setShowModal(false);
         setOtpCode("");
+        setDisableSubmit(false);
         getPaymentByUserId(user_id, token).then((result) => setData(result));
         onUpdated?.();
       }, 1500);
@@ -87,6 +90,7 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
         message: "Terjadi kesalahan saat update.",
         type: "error",
       });
+      setDisableSubmit(false);
     }
   };
   function closeModal() {
@@ -186,7 +190,10 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
           Data Pembayaran
           <div className="text-green-500">
             {session?.user?.role == "Admin" ? (
-              capitalizeName(user?.name ?? "")
+              <>
+                {capitalizeName(user?.name ?? "")}{" "}
+                {user?.alias ? ` (${user.alias})` : ""}
+              </>
             ) : (
               <></>
             )}
@@ -288,11 +295,14 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
             ref={modalRef}
             className="relative bg-gray-800 p-6 rounded-xl w-full max-w-md mx-3"
           >
-            <h3 className="text-lg font-semibold mb-4 flex gap-1">
-              Edit Pembayaran{" "}
+            <h3 className="text-lg font-semibold mb-4 col-auto ">
+              Edit Pembayaran
               <div className="text-green-500">
                 {session?.user?.role == "Admin" ? (
-                  capitalizeName(user?.name ?? "")
+                  <>
+                    {capitalizeName(user?.name ?? "")}{" "}
+                    {user?.alias ? ` (${user.alias})` : ""}
+                  </>
                 ) : (
                   <></>
                 )}
@@ -367,13 +377,14 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
                   </div>
                 </>
               )}
-
               <Button
-                onClick={handleEditSubmit}
-                disabled={showGetOTP}
-                className="px-3 py-1 bg-blue-600 text-white rounded text-sm"
+                onClick={disableSubmit ? undefined : handleEditSubmit}
+                disabled={disableSubmit || showGetOTP}
+                className={`px-3 py-1 text-white rounded text-sm ${
+                  disableSubmit ? "bg-gray-600" : "bg-blue-600"
+                }`}
               >
-                Submit
+                {disableSubmit ? "Mohon Tunggu..." : "Submit"}
               </Button>
               <NotificationModal
                 message={notif.message}

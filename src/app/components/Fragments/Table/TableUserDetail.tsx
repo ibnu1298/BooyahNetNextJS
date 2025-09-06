@@ -111,6 +111,13 @@ export default function TableUserDetail() {
                   {sortBy === "name" && (sortDirection === "asc" ? "▲" : "▼")}
                 </th>
                 <th
+                  onClick={() => handleSort("alias")}
+                  className="px-4 py-2 cursor-pointer"
+                >
+                  Alias{" "}
+                  {sortBy === "alias" && (sortDirection === "asc" ? "▲" : "▼")}
+                </th>
+                <th
                   onClick={() => handleSort("email")}
                   className="px-4 py-2 cursor-pointer"
                 >
@@ -163,9 +170,19 @@ export default function TableUserDetail() {
                 sortedUsers.map((user) => (
                   <tr
                     key={user.user_id}
-                    className="border-t border-gray-700 hover:bg-gray-700/50"
+                    className={`border-t ${
+                      user.is_subscribe
+                        ? "bg-green-700 hover:bg-green-700"
+                        : "bg-red-700/50 hover:bg-red-700/50"
+                    } `}
                   >
-                    <td className="px-4 py-2 truncate max-w-32 sticky -left-0.5 bg-gray-800 z-10">
+                    <td
+                      className={`px-4 py-2 truncate max-w-32 sticky -left-0.5 ${
+                        user.is_subscribe
+                          ? "hover:bg-green-800"
+                          : "hover:bg-red-900"
+                      }  z-10`}
+                    >
                       <button
                         onClick={() => {
                           setSelectedUser(user);
@@ -178,6 +195,7 @@ export default function TableUserDetail() {
                         {user.name}
                       </button>
                     </td>
+                    <td className="px-4 py-2 truncate">{user.alias}</td>
                     <td className="px-4 py-2 truncate">
                       <div className="flex gap-2">
                         {user.email}

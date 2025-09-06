@@ -67,6 +67,7 @@ export default function EditUserModal({ show, user, onClose, onSave }: Props) {
             user_id: edited.user_id,
             billing_date: edited.billing_date,
             is_subscribe: edited.is_subscribe,
+            alias: edited.alias,
           }),
         }
       );
@@ -113,6 +114,8 @@ export default function EditUserModal({ show, user, onClose, onSave }: Props) {
   };
 
   if (!show || !edited) return null;
+  console.log("edited");
+  console.log(edited);
 
   return (
     <div className="fixed inset-0 bg-gray-900/50 bg-opacity-40 backdrop-blur-sm z-50 flex items-center justify-center ">
@@ -167,6 +170,14 @@ export default function EditUserModal({ show, user, onClose, onSave }: Props) {
                 { label: "Aktif", value: "true" },
                 { label: "Non-Aktif", value: "false" },
               ]}
+            />
+            <Input
+              label="Alias"
+              type="text"
+              value={edited.alias ? edited.alias : ""}
+              onChange={(e: any) =>
+                setEdited({ ...edited, alias: e.target.value })
+              }
             />
             <Button type="submit">Update</Button>
           </form>
