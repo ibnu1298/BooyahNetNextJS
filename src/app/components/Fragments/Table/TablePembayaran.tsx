@@ -183,6 +183,18 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
       : "-";
     return `Kwitansi_BooyahNet_${paymentFor.replace(" ", "_")}`;
   }
+  const hasMatch = data.some((item) => {
+    const nextBilling = nextBillingDate(item.billing_date_for);
+    const nextDate = new Date(nextBilling);
+    const billingDate = new Date(item.billing_date_for);
+
+    return (
+      item.status === true &&
+      nextDate.getMonth() === billingDate.getMonth() &&
+      nextDate.getFullYear() === billingDate.getFullYear()
+    );
+  });
+
   return (
     <div className="max-w-80 md:max-w-full mx-auto bg-gray-800 p-6 rounded-2xl shadow-lg">
       <div className="md:flex justify-between mb-3">
@@ -201,10 +213,14 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
         </h2>
 
         <div className="text-white ">
-          <div className="text-xs">Tagihan Selanjutnya</div>
-          <div className="font-bold">
-            {nextBillingDate(user?.billing_date!)}
-          </div>
+          {!hasMatch && (
+            <>
+              <div className="text-xs">Tagihan Selanjutnya</div>
+              <div className="font-bold">
+                {nextBillingDate(user?.billing_date!)}
+              </div>
+            </>
+          )}
         </div>
       </div>
       <hr />
