@@ -51,7 +51,7 @@ export default function LoginForm() {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-3">
         <Input
           //label="Email"
           type="email"
@@ -68,14 +68,16 @@ export default function LoginForm() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
+        {/* <div className="pt-0">
+          <a href="#" className="hover:underline">
+            Lupa password?
+          </a>
+        </div> */}
         {/* <div className="flex items-center justify-between text-sm text-white">
           <label className="flex items-center gap-2">
             <input type="checkbox" className="accent-purple-500" />
             Remember me
           </label>
-          <a href="#" className="hover:underline">
-            Forgot password?
-          </a>
         </div> */}
         {
           <Button type="submit" disabled={loading}>
