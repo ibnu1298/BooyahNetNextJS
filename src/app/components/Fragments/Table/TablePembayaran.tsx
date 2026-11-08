@@ -46,7 +46,7 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
     setEditDate(
       payment.status
         ? payment.tanggal?.slice(0, 10) || new Date().toISOString().slice(0, 10)
-        : new Date().toISOString().slice(0, 10)
+        : new Date().toISOString().slice(0, 10),
     );
     setEditStatus(payment.status);
     setShowModal(true);
@@ -63,7 +63,7 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
         is_paid: editStatus,
         otp: otpCode,
       },
-      token
+      token,
     );
 
     if (res) {
@@ -103,14 +103,14 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
     });
   }
   const handleGetOTP = async () => {
-    const url = `${process.env.NEXT_PUBLIC_BASE_URL_API}/api/otp/whatsapp`;
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL_API}/api/otp/email`;
 
     const res = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ wa_number: userLogin?.phone }),
+      body: JSON.stringify({ email: userLogin?.email }),
     });
 
     const response = await res.json();
@@ -143,7 +143,7 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
       (result: UserDetail) => {
         setUserLogin(result);
         setLoading(false);
-      }
+      },
     );
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -278,7 +278,7 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
                             downloadReceipt(
                               item.payment_id,
                               session.user.token,
-                              nameFile(item)
+                              nameFile(item),
                             );
                           } else {
                             signOut({ callbackUrl: "/login" });
