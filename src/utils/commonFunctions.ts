@@ -36,21 +36,33 @@ export function formatTanggalBulan(tanggal: string) {
 
 export function nextBillingDate(dateString: string): string {
   const prevDate = new Date(dateString);
-  const today = new Date();
 
-  // Ambil hari billing (misalnya: 4)
+  // Ambil tanggal dan waktu sekarang berdasarkan WIB
+  const todayWIB = new Date(
+    new Date().toLocaleString("en-US", {
+      timeZone: "Asia/Jakarta",
+    }),
+  );
+
+  // Ambil hari billing
   const billingDay = prevDate.getUTCDate();
 
-  // Buat tanggal billing berikutnya (bulan ini atau bulan depan)
-  let next = new Date(today.getFullYear(), today.getMonth(), billingDay);
+  // Buat tanggal billing bulan ini
+  let next = new Date(todayWIB.getFullYear(), todayWIB.getMonth(), billingDay);
 
-  if (today.getDate() >= billingDay) {
-    // Kalau hari ini sudah lewat tanggal billing, majukan ke bulan berikutnya
-    next = new Date(today.getFullYear(), today.getMonth() + 1, billingDay);
+  // Jika hari ini sudah mencapai tanggal billing,
+  // gunakan bulan berikutnya
+  if (todayWIB.getDate() >= billingDay) {
+    next = new Date(
+      todayWIB.getFullYear(),
+      todayWIB.getMonth() + 1,
+      billingDay,
+    );
   }
 
-  // Format: 04 Juli 2025
+  // Format tanggal menggunakan WIB
   return next.toLocaleDateString("id-ID", {
+    timeZone: "Asia/Jakarta",
     day: "2-digit",
     month: "long",
     year: "numeric",
@@ -59,7 +71,7 @@ export function nextBillingDate(dateString: string): string {
 
 export function formatPhone(phone: string): string {
   const matchedPrefix = phonePrefixOptions.find((option) =>
-    phone.startsWith(option.value)
+    phone.startsWith(option.value),
   );
 
   if (!matchedPrefix) {
