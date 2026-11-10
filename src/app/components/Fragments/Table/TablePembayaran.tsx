@@ -7,6 +7,11 @@ import {
   formatTanggalBulan,
   capitalizeName,
 } from "@/utils/commonFunctions";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { getPaymentByUserId } from "@/utils/Fetch/getPaymentByUserId";
 import { getUserDetail } from "@/utils/Fetch/getUserDetail";
 import { downloadReceipt } from "@/utils/Fetch/downloadReceipt";
@@ -14,7 +19,7 @@ import { signOut, useSession } from "next-auth/react";
 import { useEffect, useState, useRef } from "react";
 import CreatePayment from "../Dashboard/CreatePayment";
 import { updatePaidAt } from "@/utils/Fetch/updatePaidAt";
-import { FileDown, SquarePen, X } from "lucide-react";
+import { FileDown, SquarePen, X, TriangleAlert } from "lucide-react";
 import Input from "../../Elements/Input";
 import Button from "../../Elements/Button";
 import NotificationModal from "../Modal/NotificationModal";
@@ -260,7 +265,38 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
                     {item.nominal.toLocaleString("id-ID")}
                   </td>
                   <td className="p-2 font-bold text-white">
-                    {item.status ? "Lunas" : "Belum Lunas"}
+                    <span className="inline-flex items-center gap-1">
+                      {item.status ? "Lunas" : "Belum Lunas"}
+
+                      {item.status && !item.is_send_receipt && (
+                        <Popover>
+                          <PopoverTrigger
+                            render={
+                              <button
+                                type="button"
+                                className="inline-flex items-center justify-center align-middle cursor-pointer"
+                              />
+                            }
+                          >
+                            <TriangleAlert
+                              size={15}
+                              color="yellow"
+                              strokeWidth={3}
+                            />
+                          </PopoverTrigger>
+
+                          <PopoverContent className="w-auto text-sm">
+                            <p className="font-semibold text-red-500">
+                              Receipt belum terkirim!
+                            </p>
+                            <p className="text-muted-foreground">
+                              Pembayaran sudah lunas, tetapi receipt belum
+                              dikirim.
+                            </p>
+                          </PopoverContent>
+                        </Popover>
+                      )}
+                    </span>
                   </td>
 
                   <td className="p-2 flex justify-center gap-2">

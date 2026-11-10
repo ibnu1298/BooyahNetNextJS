@@ -6,6 +6,7 @@ export type RawPembayaran = {
   billing_date_for: string;
   amount: string;
   is_paid: boolean;
+  is_send_receipt: boolean;
 };
 
 export async function getPaymentByUserId(userId: string, token: string) {
@@ -34,6 +35,7 @@ export async function getPaymentByUserId(userId: string, token: string) {
       billing_date_for: item.billing_date_for,
       nominal: parseInt(item.amount),
       status: item.is_paid,
+      is_send_receipt: item.is_send_receipt,
     }));
   } catch (err) {
     console.error("❌ Error saat fetch pembayaran:", err);
