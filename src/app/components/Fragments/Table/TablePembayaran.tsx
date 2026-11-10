@@ -30,8 +30,7 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
   const [showModal, setShowModal] = useState(false);
   const [selectedPayment, setSelectedPayment] = useState<Payment | null>(null);
   const [editDate, setEditDate] = useState("");
-  const [otpCode, setOtpCode] = useState("");
-  const [showGetOTP, setShowGetOTP] = useState(false);
+  const [password, setPassword] = useState("");
   const [cooldown, setCooldown] = useState(30);
   const [editStatus, setEditStatus] = useState(true);
   const [disableSubmit, setDisableSubmit] = useState(false);
@@ -50,7 +49,6 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
     );
     setEditStatus(payment.status);
     setShowModal(true);
-    setShowGetOTP(true);
   };
 
   const handleEditSubmit = async () => {
@@ -61,7 +59,7 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
         paid_at: editDate,
         payment_id: selectedPayment.payment_id,
         is_paid: editStatus,
-        otp: otpCode,
+        password: password,
       },
       token,
     );
@@ -79,7 +77,7 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
           type: "success" as "success" | "error",
         });
         setShowModal(false);
-        setOtpCode("");
+
         setDisableSubmit(false);
         getPaymentByUserId(user_id, token).then((result) => setData(result));
         onUpdated?.();
@@ -95,7 +93,7 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
   };
   function closeModal() {
     setShowModal(false);
-    setOtpCode("");
+
     setNotif({
       show: false,
       message: "",
@@ -114,6 +112,9 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
     });
 
     const response = await res.json();
+    console.log("handleGetOTP");
+
+    console.log(response);
 
     if (!res.ok) {
       setNotif({
@@ -122,9 +123,7 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
         type: "error",
       });
     } else {
-      setShowGetOTP(false);
       setCooldown(30);
-      setOtpCode("");
     }
   };
   useEffect(() => {
@@ -151,7 +150,7 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
         !modalRef.current.contains(event.target as Node)
       ) {
         setShowModal(false);
-        setOtpCode("");
+
         setNotif({
           show: false,
           message: "",
@@ -366,36 +365,24 @@ export default function TabelPembayaran({ token, user_id, onUpdated }: Props) {
               </div>
             </div>
             <div className="gap-2 space-y-2">
-              {showGetOTP ? (
-                <Button type="button" onClick={handleGetOTP}>
-                  Get OTP
-                </Button>
-              ) : (
-                <>
-                  <Input
-                    placeholder="Masukan Kode OTP"
-                    value={otpCode}
-                    onChange={(e) => {
-                      setOtpCode(e.target.value);
-                    }}
-                    rightButton={{
-                      label:
-                        cooldown > 0
-                          ? `Kirim Ulang (${cooldown}s)`
-                          : "Kirim Ulang",
-                      onClick: handleGetOTP,
-                      disabled: cooldown > 0,
-                    }}
-                  />
-                  <div className="font-light text-amber-300 text-xs text-justify">
-                    Ketika klik tombol Submit data payment akan terupdate dan
-                    memberikan message ke whatsapp pelanggan
-                  </div>
-                </>
-              )}
+              <Input
+                placeholder="Masukan Password"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+                type="password"
+                required
+              />
+
+              <div className="font-light text-amber-300 text-xs text-justify">
+                Ketika klik tombol Submit data payment akan terupdate dan
+                memberikan message ke whatsapp pelanggan
+              </div>
+
               <Button
                 onClick={disableSubmit ? undefined : handleEditSubmit}
-                disabled={disableSubmit || showGetOTP}
+                disabled={disableSubmit}
                 className={`px-3 py-1 text-white rounded text-sm ${
                   disableSubmit ? "bg-gray-600" : "bg-blue-600"
                 }`}
